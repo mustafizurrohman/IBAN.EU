@@ -6,7 +6,7 @@
 // Last Modified By : Mustafizur Rohman
 // Last Modified On : 10-25-2020
 // ***********************************************************************
-// <copyright file="France.cs" company="IBANEU.Lib">
+// <copyright file="Italy.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,44 +19,44 @@ using System;
 namespace IBANEU.Lib.Customizations
 {
     /// <summary>
-    /// Class France.
+    /// Class Italy.
     /// </summary>
-    internal class France
+    internal class Italy
     {
         internal IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.Replace(" ", string.Empty);
 
             if (ibanAsString.Length != 27)
-                throw new Exception("French IBANs must have 27 characters");
+                throw new Exception("Italian IBANs must have 27 characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
 
-            ibanDto.Country = "France";
-            ibanDto.CountryCode = "FR";
+            ibanDto.Country = "Italy";
+            ibanDto.CountryCode = "IT";
 
-            ibanDto.BranchCode = ibanAsString.Substring(9, 5);
+            var checksum = ibanAsString.Substring(2, 2);
+            var checkChar = ibanAsString.Substring(4, 1);
 
-            if (!ibanDto.BranchCode.ContainsOnlyNumbers())
-                throw new Exception("French Branch codes may contain only numbers.");
-
-            ibanDto.BankCode = ibanAsString.Substring(4, 5);
+            ibanDto.BankCode = ibanAsString.Substring(5, 5);
 
             if (!ibanDto.BankCode.ContainsOnlyNumbers())
-                throw new Exception("French Bank codes may contain only numbers.");
+                throw new Exception("Italian Bank codes may contain only numbers.");
 
-            ibanDto.AccountNumber = ibanAsString.Substring(14, 11);
+            ibanDto.BranchCode = ibanAsString.Substring(10, 5);
 
-            var checkSum = ibanAsString.Substring(2, 2);
+            if (!ibanDto.BranchCode.ContainsOnlyNumbers())
+                throw new Exception("Italian Branch codes may contain only numbers.");
 
-            var checkDigits = ibanAsString.Substring(25, 2);
+            ibanDto.AccountNumber = ibanAsString.Substring(15, 12);
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "FR" + " " + checkSum + " " + ibanDto.BankCode + " " + ibanDto.BranchCode + " " + ibanDto.AccountNumber + " " + checkDigits;
+            ibanDto.AsStringWithSpaces = "IT" + " " + checksum + " " + checkChar + " " + ibanDto.BankCode
+                                         + " " + ibanDto.BranchCode + " " + ibanDto.AccountNumber;
 
             return ibanDto;
+
         }
     }
-
 }

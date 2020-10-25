@@ -27,7 +27,8 @@ namespace IBANEU.Lib.Helper
         {
             "DE",
             "CH",
-            "FR"
+            "FR",
+            "IT"
         };
 
         /// <summary>

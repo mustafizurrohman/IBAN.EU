@@ -96,8 +96,6 @@ namespace IBANEU.Lib.Core
 
         private bool VerifyHash(string ibanAsString)
         {
-            // return true;
-
             var newIban = ibanAsString.Substring(4) + ibanAsString.Substring(0, 4);
 
             newIban = Regex.Replace(newIban, @"\D", match => (match.Value[0] - 55).ToString());
@@ -135,6 +133,7 @@ namespace IBANEU.Lib.Core
                 "DE" => new Germany().ParseIbanFromString(ibanAsString),
                 "CH" => new Switzerland().ParseIbanFromString(ibanAsString),
                 "FR" => new France().ParseIbanFromString(ibanAsString),
+                "IT" => new Italy().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("No country code found.")
             };
 
@@ -144,6 +143,7 @@ namespace IBANEU.Lib.Core
             this.BankCode = parsed.BankCode;
             this.AsStringWithSpaces = parsed.AsStringWithSpaces;
         }
+
 
 
 

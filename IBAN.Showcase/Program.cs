@@ -14,6 +14,7 @@
 
 using IBANEU.Lib.Core;
 using System;
+using System.Collections.Generic;
 
 namespace IBANEU.Showcase
 {
@@ -27,14 +28,45 @@ namespace IBANEU.Showcase
         /// Defines the entry point of the application.
         /// </summary>
         /// <param name="args">The arguments.</param>
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            // DE 89 37040044 053201300
-            var frenchIBAN = "FR 14 20041 01005 0500013M026 06";
+            List<string> IBANList = new List<string>()
+            {
+                "IT97V0300203280544573814611",
+                "FR5317569000506249263175I27",
+                "FR5317569000506249263175I27",
+                "DE30500105176873617729",
+                "DE77500105175734242273"
+            };
 
-            var iban = new IBAN(frenchIBAN);
+
+            foreach (var ibanString in IBANList)
+            {
+                var iban = new IBAN(ibanString);
+                PrintIBAN(iban);
+            }
 
             Console.ReadKey();
         }
+
+        /// <summary>
+        /// Prints the iban.
+        /// </summary>
+        /// <param name="iban">The iban.</param>
+        private static void PrintIBAN(IBAN iban)
+        {
+            Console.WriteLine("Country          : " + iban.Country);
+            Console.WriteLine("CountryCode      : " + iban.CountryCode);
+            Console.WriteLine("BankCode         : " + iban.BankCode);
+            Console.WriteLine("BranchCode       : " + iban.BranchCode);
+            Console.WriteLine("AccountNumber    : " + iban.AccountNumber);
+            Console.WriteLine("Formatted string : " + iban.AsStringWithSpaces);
+            Console.WriteLine();
+            Console.WriteLine();
+
+        }
+
+
+
     }
 }
