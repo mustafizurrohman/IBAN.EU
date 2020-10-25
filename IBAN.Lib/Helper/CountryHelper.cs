@@ -48,13 +48,15 @@ namespace IBANEU.Lib.Helper
         }
 
         /// <summary>
-        /// Gets the country from code.
+        /// Gets the country from iban string.
         /// </summary>
-        /// <param name="countryCode">The country code.</param>
-        /// <returns>System.String.</returns>
+        /// <param name="ibanString">The iban string.</param>
+        /// <returns>string.</returns>
         /// <exception cref="Exception">Country not yet customized</exception>
-        public static string GetCountryFromCode(string countryCode)
+        public static string GetCountryFromIBANString(string ibanString)
         {
+            var countryCode = GetCountryCode(ibanString);
+
             if (!IsCountryCustomized(countryCode))
                 throw new Exception("Country not yet customized");
 

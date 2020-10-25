@@ -34,8 +34,9 @@ namespace IBANEU.Lib.Customizations
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
 
-            ibanDto.CountryCode = CountryHelper.GetCountryFromCode(ibanAsString);
-            ibanDto.Country = CountryHelper.GetCountryFromCode(ibanDto.CountryCode);
+            ibanDto.CountryCode = CountryHelper.GetCountryCode(ibanAsString);
+            ibanDto.Country = CountryHelper.GetCountryFromIBANString(ibanAsString);
+
 
             ibanDto.BranchCode = ibanAsString.Substring(9, 5);
 
