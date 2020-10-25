@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IBAN.Lib\IBAN.Lib.csproj" />
+    <ProjectReference Include="..\IBAN.Lib\IBANEU.Lib.csproj" />
   </ItemGroup>
 
 </Project>
