@@ -23,7 +23,7 @@ namespace IBANEU.Lib.Customizations
     {
         internal IBANDto ParseIbanFromString(string ibanAsString)
         {
-            ibanAsString = ibanAsString.Replace(" ", string.Empty);
+            ibanAsString = ibanAsString.RemoveSpaces();
 
             if (ibanAsString.Length != 22)
                 throw new Exception("German IBANs must have 22 characters");

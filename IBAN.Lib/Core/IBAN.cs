@@ -35,43 +35,37 @@ namespace IBANEU.Lib.Core
         /// Gets the country code.
         /// </summary>
         /// <value>The country code.</value>
-        public string CountryCode { get; private set; }
+        public string CountryCode { get; }
 
         /// <summary>
         /// Gets the country.
         /// </summary>
         /// <value>The country.</value>
-        public string Country { get; private set; }
+        public string Country { get; }
 
         /// <summary>
         /// Gets the BranchCode.
         /// </summary>
         /// <value>The BranchCode.</value>
-        public string BranchCode { get; private set; }
+        public string BranchCode { get; }
 
         /// <summary>
         /// Gets the bank code.
         /// </summary>
         /// <value>The bank code.</value>
-        public string BankCode { get; private set; }
+        public string BankCode { get; }
 
         /// <summary>
         /// Gets the account number.
         /// </summary>
         /// <value>The account number.</value>
-        public string AccountNumber { get; private set; }
-
-        /// <summary>
-        /// Gets as string.
-        /// </summary>
-        /// <value>As string.</value>
-        private string AsString { get; }
+        public string AccountNumber { get; }
 
         /// <summary>
         /// Gets or sets as string with spaces.
         /// </summary>
         /// <value>As string with spaces.</value>
-        public string AsStringWithSpaces { get; set; }
+        private string AsStringWithSpaces { get; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -79,7 +73,7 @@ namespace IBANEU.Lib.Core
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return AsString;
+            return AsStringWithSpaces;
         }
 
 
@@ -115,8 +109,6 @@ namespace IBANEU.Lib.Core
         {
             ibanAsString = ibanAsString.Replace(" ", string.Empty);
 
-            this.AsString = ibanAsString;
-
             if (ibanAsString.ContainsSpecialCharacters())
                 throw new ArgumentException("IBAN cannot contain special characters.");
 
@@ -134,6 +126,8 @@ namespace IBANEU.Lib.Core
                 "CH" => new Switzerland().ParseIbanFromString(ibanAsString),
                 "FR" => new France().ParseIbanFromString(ibanAsString),
                 "IT" => new Italy().ParseIbanFromString(ibanAsString),
+                "ES" => new Spain().ParseIbanFromString(ibanAsString),
+                "LU" => new Luxembourg().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("No country code found.")
             };
 

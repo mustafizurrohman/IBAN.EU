@@ -20,7 +20,7 @@ namespace IBANEU.Lib.ExtensionMethods
     /// <summary>
     /// Class StringExtensions.
     /// </summary>
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         /// <summary>
         /// Determines whether [contains only numbers] [the specified input string].
@@ -50,6 +50,16 @@ namespace IBANEU.Lib.ExtensionMethods
         public static bool ContainsOnlyCharacters(this string inputString)
         {
             return inputString.All(char.IsLetter);
+        }
+
+        /// <summary>
+        /// Removes the spaces.
+        /// </summary>
+        /// <param name="inputString">The input string.</param>
+        /// <returns>System.String.</returns>
+        public static string RemoveSpaces(this string inputString)
+        {
+            return inputString.Replace(" ", string.Empty);
         }
 
     }

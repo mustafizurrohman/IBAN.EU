@@ -25,7 +25,7 @@ namespace IBANEU.Lib.Customizations
     {
         internal IBANDto ParseIbanFromString(string ibanAsString)
         {
-            ibanAsString = ibanAsString.Replace(" ", string.Empty);
+            ibanAsString = ibanAsString.RemoveSpaces();
 
             if (ibanAsString.Length != 27)
                 throw new Exception("Italian IBANs must have 27 characters");

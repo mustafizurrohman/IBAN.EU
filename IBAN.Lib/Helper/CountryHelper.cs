@@ -28,7 +28,9 @@ namespace IBANEU.Lib.Helper
             "DE",
             "CH",
             "FR",
-            "IT"
+            "IT",
+            "ES",
+            "LU"
         };
 
         /// <summary>

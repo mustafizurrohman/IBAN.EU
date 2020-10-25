@@ -8,7 +8,7 @@ namespace IBANEU.Lib.Customizations
     {
         internal IBANDto ParseIbanFromString(string ibanAsString)
         {
-            ibanAsString = ibanAsString.Replace(" ", string.Empty);
+            ibanAsString = ibanAsString.RemoveSpaces();
 
             if (ibanAsString.Length != 21)
                 throw new Exception("Swiss IBANs must have 21 characters");
