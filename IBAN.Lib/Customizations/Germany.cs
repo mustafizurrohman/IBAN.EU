@@ -14,6 +14,7 @@
 
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
+using IBANEU.Lib.Helper;
 using System;
 
 namespace IBANEU.Lib.Customizations
@@ -31,8 +32,8 @@ namespace IBANEU.Lib.Customizations
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
 
-            ibanDto.Country = "Germany";
-            ibanDto.CountryCode = "DE";
+            ibanDto.CountryCode = CountryHelper.GetCountryFromCode(ibanAsString);
+            ibanDto.Country = CountryHelper.GetCountryFromCode(ibanDto.CountryCode);
 
             ibanDto.BranchCode = ibanAsString.Substring(4, 8);
             ibanDto.BankCode = ibanDto.BranchCode;

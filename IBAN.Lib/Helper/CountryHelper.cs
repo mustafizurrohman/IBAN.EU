@@ -11,7 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IBANEU.Lib.Helper
 {
@@ -20,17 +23,18 @@ namespace IBANEU.Lib.Helper
     /// </summary>
     internal static class CountryHelper
     {
+
         /// <summary>
         /// The customized countries
         /// </summary>
-        private static readonly List<string> CustomizedCountries = new List<string>()
+        private static readonly Dictionary<string, string> CustomizedCountries = new Dictionary<string, string>()
         {
-            "DE",
-            "CH",
-            "FR",
-            "IT",
-            "ES",
-            "LU"
+            { "DE", "Germany" },
+            { "CH", "Switzerland" },
+            { "FR", "France" },
+            { "IT", "Italy" },
+            { "ES", "Spain" },
+            { "LU" , "Luxembourg" }
         };
 
         /// <summary>
@@ -40,7 +44,32 @@ namespace IBANEU.Lib.Helper
         /// <returns><c>true</c> if [is country customized] [the specified country code]; otherwise, <c>false</c>.</returns>
         public static bool IsCountryCustomized(string countryCode)
         {
-            return CustomizedCountries.Contains(countryCode);
+            return CustomizedCountries.Keys.Contains(countryCode);
+        }
+
+        /// <summary>
+        /// Gets the country from code.
+        /// </summary>
+        /// <param name="countryCode">The country code.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="Exception">Country not yet customized</exception>
+        public static string GetCountryFromCode(string countryCode)
+        {
+            if (!IsCountryCustomized(countryCode))
+                throw new Exception("Country not yet customized");
+
+            return CustomizedCountries[countryCode];
+        }
+
+        public static string GetCountryCode(string ibanString)
+        {
+            if (ibanString.Length < 2)
+            {
+                throw new ArgumentException("No country code found.");
+            }
+
+            return ibanString.Substring(0, Math.Min(2, ibanString.Length)).ToUpperInvariant();
+
         }
     }
 }

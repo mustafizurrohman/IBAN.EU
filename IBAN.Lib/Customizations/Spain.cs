@@ -14,6 +14,7 @@
 
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
+using IBANEU.Lib.Helper;
 using System;
 
 namespace IBANEU.Lib.Customizations
@@ -46,8 +47,8 @@ namespace IBANEU.Lib.Customizations
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
 
-            ibanDto.Country = "Spain";
             ibanDto.CountryCode = "ES";
+            ibanDto.Country = CountryHelper.GetCountryFromCode(ibanDto.CountryCode);
 
             var checksum = ibanAsString.Substring(2, 2);
 

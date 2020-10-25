@@ -77,17 +77,6 @@ namespace IBANEU.Lib.Core
         }
 
 
-        private string GetCountryCode(string ibanString)
-        {
-            if (ibanString.Length < 2)
-            {
-                throw new ArgumentException("No country code found.");
-            }
-
-            return ibanString.Substring(0, Math.Min(2, ibanString.Length)).ToUpperInvariant();
-
-        }
-
         private bool VerifyHash(string ibanAsString)
         {
             var newIban = ibanAsString.Substring(4) + ibanAsString.Substring(0, 4);
@@ -115,7 +104,7 @@ namespace IBANEU.Lib.Core
             if (!VerifyHash(ibanAsString))
                 throw new ArgumentException("Invalid IBAN. Hash verification failed.");
 
-            this.CountryCode = GetCountryCode(ibanAsString);
+            this.CountryCode = CountryHelper.GetCountryCode(ibanAsString);
 
             if (!CountryHelper.IsCountryCustomized(this.CountryCode))
                 throw new NotImplementedException("Country not yet suported.");
