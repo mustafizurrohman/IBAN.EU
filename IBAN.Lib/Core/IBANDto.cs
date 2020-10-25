@@ -32,10 +32,10 @@ namespace IBANEU.Lib.Core
         public string Country { get; set; }
 
         /// <summary>
-        /// Gets the BLZ.
+        /// Gets the BranchCode.
         /// </summary>
-        /// <value>The BLZ.</value>
-        public string BLZ { get; set; }
+        /// <value>The BranchCode.</value>
+        public string BranchCode { get; set; }
 
         /// <summary>
         /// Gets the bank code.

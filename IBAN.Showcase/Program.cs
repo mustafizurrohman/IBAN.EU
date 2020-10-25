@@ -23,6 +23,7 @@ namespace IBANEU.Showcase
     /// <summary>
     /// Class Program.
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
         /// <summary>
@@ -32,9 +33,9 @@ namespace IBANEU.Showcase
         static void Main(string[] args)
         {
             // DE 89 37040044 053201300
-            var germanIban = "CH 93 00762 011623852957";
+            var frenchIBAN = "FR 14 20041 01005 0500013M026 06";
 
-            var iban = new IBAN(germanIban);
+            var iban = new IBAN(frenchIBAN);
 
             Console.ReadKey();
         }

@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using IBANEU.Lib.Core;
+using IBANEU.Lib.ExtensionMethods;
 using System;
 
 namespace IBANEU.Lib.Customizations
@@ -33,15 +34,21 @@ namespace IBANEU.Lib.Customizations
             ibanDto.Country = "Germany";
             ibanDto.CountryCode = "DE";
 
-            ibanDto.BLZ = ibanAsString.Substring(4, 8);
-            ibanDto.BankCode = ibanDto.BLZ;
+            ibanDto.BranchCode = ibanAsString.Substring(4, 8);
+            ibanDto.BankCode = ibanDto.BranchCode;
+
+            if (!ibanDto.BankCode.ContainsOnlyNumbers())
+                throw new Exception("German Bank Codes may contain only numbers.");
 
             ibanDto.AccountNumber = ibanAsString.Substring(12, 10);
+
+            if (!ibanDto.AccountNumber.ContainsOnlyNumbers())
+                throw new Exception("German Account numbers may contain only numbers.");
 
             var checkSum = ibanAsString.Substring(2, 2);
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "DE" + " " + checkSum + " " + ibanDto.BLZ + " " + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = "DE" + " " + checkSum + " " + ibanDto.BranchCode + " " + ibanDto.AccountNumber;
 
             return ibanDto;
         }

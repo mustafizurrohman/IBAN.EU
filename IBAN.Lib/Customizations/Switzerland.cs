@@ -1,4 +1,5 @@
 ﻿using IBANEU.Lib.Core;
+using IBANEU.Lib.ExtensionMethods;
 using System;
 
 namespace IBANEU.Lib.Customizations
@@ -18,15 +19,21 @@ namespace IBANEU.Lib.Customizations
             ibanDto.Country = "Switzerland";
             ibanDto.CountryCode = "CH";
 
-            ibanDto.BLZ = ibanAsString.Substring(4, 5);
-            ibanDto.BankCode = ibanDto.BLZ;
+            ibanDto.BranchCode = ibanAsString.Substring(4, 5);
+            ibanDto.BankCode = ibanDto.BranchCode;
+
+            if (!ibanDto.BankCode.ContainsOnlyNumbers())
+                throw new Exception("Swiss Bank codes may contain only numbers.");
 
             ibanDto.AccountNumber = ibanAsString.Substring(9, 12);
+
+            if (!ibanDto.AccountNumber.ContainsOnlyNumbers())
+                throw new Exception("Swiss Account numbers may contain only numbers.");
 
             var checkSum = ibanAsString.Substring(2, 2);
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "CH" + " " + checkSum + " " + ibanDto.BLZ + " " + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = "CH" + " " + checkSum + " " + ibanDto.BranchCode + " " + ibanDto.AccountNumber;
 
             return ibanDto;
         }

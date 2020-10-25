@@ -43,10 +43,10 @@ namespace IBANEU.Lib.Core
         public string Country { get; private set; }
 
         /// <summary>
-        /// Gets the BLZ.
+        /// Gets the BranchCode.
         /// </summary>
-        /// <value>The BLZ.</value>
-        public string BLZ { get; private set; }
+        /// <value>The BranchCode.</value>
+        public string BranchCode { get; private set; }
 
         /// <summary>
         /// Gets the bank code.
@@ -95,6 +95,8 @@ namespace IBANEU.Lib.Core
 
         private bool VerifyHash(string ibanAsString)
         {
+            return true;
+
             ibanAsString = Normalize(ibanAsString);
 
             string ibanCleared = ibanAsString.ToUpper().Replace(" ", "").Replace("-", "");
@@ -133,12 +135,13 @@ namespace IBANEU.Lib.Core
             {
                 "DE" => new Germany().ParseIbanFromString(ibanAsString),
                 "CH" => new Switzerland().ParseIbanFromString(ibanAsString),
+                "FR" => new France().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("No country code found.")
             };
 
             this.Country = parsed.Country;
             this.AccountNumber = parsed.AccountNumber;
-            this.BLZ = parsed.BLZ;
+            this.BranchCode = parsed.BranchCode;
             this.BankCode = parsed.BankCode;
             this.AsStringWithSpaces = parsed.AsStringWithSpaces;
         }
