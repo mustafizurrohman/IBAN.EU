@@ -20,7 +20,8 @@ using IBANEU.Lib.Customizations;
 using IBANEU.Lib.ExtensionMethods;
 using IBANEU.Lib.Helper;
 using System;
-using System.Linq;
+using System.Numerics;
+using System.Text.RegularExpressions;
 
 namespace IBANEU.Lib.Core
 {
@@ -95,17 +96,15 @@ namespace IBANEU.Lib.Core
 
         private bool VerifyHash(string ibanAsString)
         {
-            return true;
+            // return true;
 
-            ibanAsString = Normalize(ibanAsString);
+            var newIban = ibanAsString.Substring(4) + ibanAsString.Substring(0, 4);
 
-            string ibanCleared = ibanAsString.ToUpper().Replace(" ", "").Replace("-", "");
-            string ibanSwapped = ibanCleared.Substring(4) + ibanCleared.Substring(0, 4);
-            string sum = ibanSwapped.Aggregate("", (current, c) => current + (char.IsLetter(c) ? (c - 55).ToString() : c.ToString()));
+            newIban = Regex.Replace(newIban, @"\D", match => (match.Value[0] - 55).ToString());
 
-            var d = decimal.Parse(sum);
-            return ((d % 97) == 1);
+            var remainder = BigInteger.Parse(newIban) % 97;
 
+            return remainder == 1;
         }
 
 

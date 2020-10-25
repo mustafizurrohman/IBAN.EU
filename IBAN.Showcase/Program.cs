@@ -15,9 +15,6 @@
 using IBANEU.Lib.Core;
 using System;
 
-// using Iban = IBANEU.Lib.Core.IBAN;
-
-
 namespace IBANEU.Showcase
 {
     /// <summary>
