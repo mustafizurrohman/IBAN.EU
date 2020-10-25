@@ -17,19 +17,15 @@ using System;
 
 namespace IBANEU.Lib.Customizations
 {
-    /// <summary>
-    /// Class Germany.
-    /// Implements the <see cref="IBANEU.Lib.Customizations.ICustomizationBase" />
-    /// </summary>
-    /// <seealso cref="IBANEU.Lib.Customizations.ICustomizationBase" />
-    public class Germany
+
+    internal class Germany
     {
         internal IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.Replace(" ", string.Empty);
 
             if (ibanAsString.Length != 22)
-                throw new Exception("German IBANs must have atleast 22 characters");
+                throw new Exception("German IBANs must have 22 characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();

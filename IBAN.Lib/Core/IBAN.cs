@@ -129,13 +129,12 @@ namespace IBANEU.Lib.Core
             if (!CountryHelper.IsCountryCustomized(this.CountryCode))
                 throw new NotImplementedException("Country not yet suported.");
 
-            IBANDto parsed = new IBANDto();
-
-            if (this.CountryCode == "DE")
+            IBANDto parsed = this.CountryCode switch
             {
-                parsed = new Germany().ParseIbanFromString(ibanAsString);
-
-            }
+                "DE" => new Germany().ParseIbanFromString(ibanAsString),
+                "CH" => new Switzerland().ParseIbanFromString(ibanAsString),
+                _ => throw new Exception("No country code found.")
+            };
 
             this.Country = parsed.Country;
             this.AccountNumber = parsed.AccountNumber;

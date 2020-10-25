@@ -25,7 +25,8 @@ namespace IBANEU.Lib.Helper
         /// </summary>
         private static readonly List<string> CustomizedCountries = new List<string>()
         {
-            "DE"
+            "DE",
+            "CH"
         };
 
         /// <summary>

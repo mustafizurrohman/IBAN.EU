@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBANEU.Lib", "IBAN.Lib\IBANEU.Lib.csproj", "{1DDFE20E-8029-419B-AF37-C26E5DA699F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBAN.Showcase", "IBAN.Showcase\IBAN.Showcase.csproj", "{60A5D01C-3E58-4C87-9C8B-A77164B17C4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBANEU.Showcase", "IBAN.Showcase\IBANEU.Showcase.csproj", "{60A5D01C-3E58-4C87-9C8B-A77164B17C4F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBAN.Tests", "IBAN.Tests\IBAN.Tests.csproj", "{1ABA2376-2198-4AF9-A5D6-A2FBD3D43BC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBANEU.Tests", "IBAN.Tests\IBANEU.Tests.csproj", "{1ABA2376-2198-4AF9-A5D6-A2FBD3D43BC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

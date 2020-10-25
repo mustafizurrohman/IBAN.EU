@@ -11,11 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
+using IBANEU.Lib.Core;
 using System;
-using Iban = IBANEU.Lib.Core.IBAN;
+
+// using Iban = IBANEU.Lib.Core.IBAN;
 
 
-namespace IBAN.Showcase
+namespace IBANEU.Showcase
 {
     /// <summary>
     /// Class Program.
@@ -29,9 +32,9 @@ namespace IBAN.Showcase
         static void Main(string[] args)
         {
             // DE 89 37040044 053201300
-            var germanIban = "DE 89 37040044 0532013000";
+            var germanIban = "CH 93 00762 011623852957";
 
-            var iban = new Iban(germanIban);
+            var iban = new IBAN(germanIban);
 
             Console.ReadKey();
         }
