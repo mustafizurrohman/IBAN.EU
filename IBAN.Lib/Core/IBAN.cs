@@ -88,15 +88,9 @@ namespace IBANEU.Lib.Core
             return remainder == 1;
         }
 
-
-        private static string Normalize(string ibanAsString)
-        {
-            return ibanAsString.Replace(" ", string.Empty).ToUpperInvariant();
-        }
-
         public IBAN(string ibanAsString)
         {
-            ibanAsString = ibanAsString.Replace(" ", string.Empty);
+            ibanAsString = ibanAsString.RemoveSpaces().ToUpperInvariant();
 
             if (ibanAsString.ContainsSpecialCharacters())
                 throw new ArgumentException("IBAN cannot contain special characters.");
@@ -117,7 +111,7 @@ namespace IBANEU.Lib.Core
                 "IT" => new Italy().ParseIbanFromString(ibanAsString),
                 "ES" => new Spain().ParseIbanFromString(ibanAsString),
                 "LU" => new Luxembourg().ParseIbanFromString(ibanAsString),
-                _ => throw new Exception("No country code found.")
+                _ => throw new Exception("Country not supported yet.")
             };
 
             this.Country = parsed.Country;
@@ -127,7 +121,26 @@ namespace IBANEU.Lib.Core
             this.AsStringWithSpaces = parsed.AsStringWithSpaces;
         }
 
+        public static bool TryParse(string? s, out IBAN result)
+        {
 
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                result = null;
+                return false;
+            }
+
+            try
+            {
+                result = new IBAN(s);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
+        }
 
 
 

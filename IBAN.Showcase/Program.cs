@@ -37,20 +37,25 @@ namespace IBANEU.Showcase
                 "IT93W0300203280218279291256",
                 "IT93W0300203280218279291256",
                 "FR0517569000705155569433Z66",
-                "FR0917569000506234196834A60",
-                "LU740102566746143857",
-                "LU650105818714497199",
+                "  FR0917569000506234196834A60",
+                " LU740102566746143857 ",
+                "   LU650105818714497199   ",
                 "ES3821001145312151912217",
                 "ES4620803394737891248453",
                 "CH8589144863123213561",
-                "CH9489144997985576188"
+                "CH9489144997985576188",
+                "CH9489144992985576288"
+
             };
+
 
 
             foreach (var ibanString in IBANList)
             {
-                var iban = new IBAN(ibanString);
-                PrintIBAN(iban);
+                var parseResult = IBAN.TryParse(ibanString, out IBAN ibanResult);
+
+                Console.WriteLine(parseResult);
+                Console.WriteLine(ibanResult);
             }
 
             Console.ReadKey();
