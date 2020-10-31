@@ -33,15 +33,30 @@ namespace IBANEU.Showcase
         {
             List<string> IBANList = new List<string>()
             {
-                "AD 12 0001 2030 200359100100"
+                "AX 21 123456 00000785",
+                "AL57134113217528637732263667",
+                "AL51214511261137674831354215",
+                "AD3286538925232727517527",
+                "AD5049399964224638447645",
+                "FR9817569000305544869843E32",
+                "FR3610096000704321729662T49",
+                "DE82500105176165735431",
+                "DE80500105177968364552",
+                "IT06G0300203280946811197846",
+                "IT23U0300203280287762594757",
+                "LU690103334317935973",
+                "LU420107983598849182",
+                "ES4514656743466943856983",
+                "ES6221001567195882969695",
+                "CH8189144628241783559",
+                "CH9289144925817269413"
             };
 
 
 
             foreach (var ibanString in IBANList)
             {
-                // _ =
-                IBAN.TryParse(ibanString, out IBAN ibanResult);
+                _ = IBAN.TryParse(ibanString, out IBAN ibanResult);
                 Console.WriteLine(ibanResult);
                 ibanResult.PrintToConsole();
             }

@@ -21,14 +21,17 @@ namespace IBANEU.Lib.Customizations
     /// <summary>
     /// Class Italy.
     /// </summary>
-    internal class Italy
+    internal class Italy : CustomizationBase
     {
-        internal IBANDto ParseIbanFromString(string ibanAsString)
+
+        internal override int IBANLength => 27;
+
+        internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
 
-            if (ibanAsString.Length != 27)
-                throw new Exception("Italian IBANs must have 27 characters");
+            if (ibanAsString.Length != IBANLength)
+                throw new Exception($"Italian IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();

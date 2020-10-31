@@ -4,15 +4,17 @@ using System;
 
 namespace IBANEU.Lib.Customizations
 {
-    internal class Luxembourg
+    internal class Luxembourg : CustomizationBase
     {
-        public IBANDto ParseIbanFromString(string ibanAsString)
+        internal override int IBANLength => 20;
+
+        internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             var space = " ";
             ibanAsString = ibanAsString.RemoveSpaces();
 
-            if (ibanAsString.Length != 20)
-                throw new Exception("Luxembourgish IBANs must have 20 characters");
+            if (ibanAsString.Length != IBANLength)
+                throw new Exception($"Luxembourgish IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();

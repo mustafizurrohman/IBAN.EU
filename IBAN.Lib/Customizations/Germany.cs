@@ -19,14 +19,16 @@ using System;
 namespace IBANEU.Lib.Customizations
 {
 
-    internal class Germany
+    internal class Germany : CustomizationBase
     {
-        internal IBANDto ParseIbanFromString(string ibanAsString)
+        internal override int IBANLength => 22;
+
+        internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
 
             if (ibanAsString.Length != 22)
-                throw new Exception("German IBANs must have 22 characters");
+                throw new Exception($"German IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();

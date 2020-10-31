@@ -21,22 +21,26 @@ namespace IBANEU.Lib.Customizations
     /// <summary>
     /// Class Andorra.
     /// </summary>
-    internal class Andorra
+    internal class Andorra : CustomizationBase
     {
+
+        internal override int IBANLength => 24;
+
         /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANDto.</returns>
         /// <exception cref="Exception">French IBANs must have 27 characters</exception>
-        internal IBANDto ParseIbanFromString(string ibanAsString)
+        internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
+
             var space = " ";
 
             ibanAsString = ibanAsString.RemoveSpaces();
 
-            if (ibanAsString.Length != 24)
-                throw new Exception("Andorran IBANs must have 24 characters");
+            if (ibanAsString.Length != IBANLength)
+                throw new Exception($"Andorran IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();

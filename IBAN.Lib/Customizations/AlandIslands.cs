@@ -21,8 +21,11 @@ namespace IBANEU.Lib.Customizations
     /// <summary>
     /// Class AlandIslands.
     /// </summary>
-    internal class AlandIslands
+    internal class AlandIslands : CustomizationBase
     {
+        internal override int IBANLength => 18;
+
+
         /// <summary>
         /// Parses the iban from string.
         /// </summary>
@@ -30,12 +33,12 @@ namespace IBANEU.Lib.Customizations
         /// <returns>IBANDto.</returns>
         /// <exception cref="Exception">IBANs from Aland Islands must have 18 characters</exception>
         /// <exception cref="Exception">Bank and Branch code form Aland Islands may contain only numbers.</exception>
-        internal IBANDto ParseIbanFromString(string ibanAsString)
+        internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
 
-            if (ibanAsString.Length != 18)
-                throw new Exception("IBANs from Aland Islands must have 18 characters");
+            if (ibanAsString.Length != IBANLength)
+                throw new Exception($"IBANs from Aland Islands must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
@@ -61,5 +64,6 @@ namespace IBANEU.Lib.Customizations
 
             return ibanDto;
         }
+
     }
 }

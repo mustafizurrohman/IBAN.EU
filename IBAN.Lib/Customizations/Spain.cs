@@ -21,8 +21,11 @@ namespace IBANEU.Lib.Customizations
     /// <summary>
     /// Class Spain.
     /// </summary>
-    internal class Spain
+    internal class Spain : CustomizationBase
     {
+
+        internal override int IBANLength => 24;
+
         /// <summary>
         /// Parses the iban from string.
         /// </summary>
@@ -34,14 +37,14 @@ namespace IBANEU.Lib.Customizations
         /// <exception cref="Exception">Spanish Branch codes may contain only numbers.</exception>
         /// <exception cref="Exception">Spanish CheckDigit may contain only numbers.</exception>
         /// <exception cref="Exception">Spanish Account Numbers may contain only numbers.</exception>
-        internal IBANDto ParseIbanFromString(string ibanAsString)
+        internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             var space = " ";
 
             ibanAsString = ibanAsString.RemoveSpaces();
 
-            if (ibanAsString.Length != 24)
-                throw new Exception("Spanish IBANs must have 24 characters");
+            if (ibanAsString.Length != IBANLength)
+                throw new Exception($"Spanish IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
