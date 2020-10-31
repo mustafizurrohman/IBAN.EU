@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using IBANEU.Lib.Core;
+using System;
 
 namespace IBANEU.Lib.ExtensionMethods
 {
@@ -49,6 +50,28 @@ namespace IBANEU.Lib.ExtensionMethods
         public static string ToFormattedIBANString(this string IBANString)
         {
             return new IBAN(IBANString).ToString();
+        }
+
+        /// <summary>
+        /// Prints to console.
+        /// </summary>
+        /// <param name="iban">The iban.</param>
+        public static void PrintToConsole(this IBAN iban)
+        {
+            if (iban is null)
+                return;
+
+            Console.WriteLine("Country          : " + iban.Country);
+            Console.WriteLine("CountryCode      : " + iban.CountryCode);
+            Console.WriteLine("BankCode         : " + iban.BankCode);
+
+            if (!string.IsNullOrWhiteSpace(iban.BranchCode))
+                Console.WriteLine("BranchCode       : " + iban.BranchCode);
+
+            Console.WriteLine("AccountNumber    : " + iban.AccountNumber);
+            Console.WriteLine("Formatted string : " + iban);
+            Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

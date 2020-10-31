@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 
+using IBANEU.Lib.Helper;
+
 namespace IBANEU.Lib.Core
 {
     /// <summary>
@@ -68,6 +70,12 @@ namespace IBANEU.Lib.Core
         public override string ToString()
         {
             return AsString;
+        }
+
+        internal void AssignCountryAndCode(string ibanAsString)
+        {
+            this.CountryCode = CountryHelper.GetCountryCode(ibanAsString);
+            this.Country = CountryHelper.GetCountryFromIBANString(ibanAsString);
         }
 
     }
