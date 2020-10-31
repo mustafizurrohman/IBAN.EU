@@ -4,7 +4,7 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-25-2020
+// Last Modified On : 10-31-2020
 // ***********************************************************************
 // <copyright file="IBANDto.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -25,13 +25,13 @@ namespace IBANEU.Lib.Core
         /// Gets the country code.
         /// </summary>
         /// <value>The country code.</value>
-        public string CountryCode { get; set; }
+        public string CountryCode { get; private set; }
 
         /// <summary>
         /// Gets the country.
         /// </summary>
         /// <value>The country.</value>
-        public string Country { get; set; }
+        public string Country { get; private set; }
 
         /// <summary>
         /// Gets the BranchCode.
@@ -72,6 +72,10 @@ namespace IBANEU.Lib.Core
             return AsString;
         }
 
+        /// <summary>
+        /// Assigns the country and code.
+        /// </summary>
+        /// <param name="ibanAsString">The iban as string.</param>
         internal void AssignCountryAndCode(string ibanAsString)
         {
             this.CountryCode = CountryHelper.GetCountryCode(ibanAsString);

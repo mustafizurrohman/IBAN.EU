@@ -4,7 +4,7 @@
 // Created          : 10-30-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-30-2020
+// Last Modified On : 10-31-2020
 // ***********************************************************************
 // <copyright file="IBANExtensions.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -23,10 +23,10 @@ namespace IBANEU.Lib.ExtensionMethods
     public static class IBANExtensions
     {
         /// <summary>
-        /// 
+        /// Determines whether [is valid iban] [the specified iban string].
         /// </summary>
-        /// <param name="IBANString"></param>
-        /// <returns></returns>
+        /// <param name="IBANString">The iban string.</param>
+        /// <returns><c>true</c> if [is valid iban] [the specified iban string]; otherwise, <c>false</c>.</returns>
         // ReSharper disable once InconsistentNaming
         public static bool IsValidIBAN(this string IBANString)
         {

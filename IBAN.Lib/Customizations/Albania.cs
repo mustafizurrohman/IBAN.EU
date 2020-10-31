@@ -23,8 +23,19 @@ namespace IBANEU.Lib.Customizations
     /// </summary>
     internal class Albania : CustomizationBase
     {
+        /// <summary>
+        /// Gets or sets the length of the iban.
+        /// </summary>
+        /// <value>The length of the iban.</value>
         internal override int IBANLength => 28;
 
+        /// <summary>
+        /// Parses the iban from string.
+        /// </summary>
+        /// <param name="ibanAsString">The iban as string.</param>
+        /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
+        /// <exception cref="Exception">Albanian Islands must have {IBANLength} characters.</exception>
+        /// <exception cref="Exception">Albanian Bank and Branch codes may contain only numbers.</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
@@ -48,12 +59,10 @@ namespace IBANEU.Lib.Customizations
 
             var checksum = ibanAsString.Substring(2, 2);
 
-            var space = " ";
-
             ibanDto.AsString = ibanAsString;
 
-            ibanDto.AsStringWithSpaces = "AL" + space + checksum + space
-                                         + ibanDto.BankCode + space + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = "AL" + Space + checksum + Space
+                                         + ibanDto.BankCode + Space + ibanDto.AccountNumber;
 
             return ibanDto;
         }

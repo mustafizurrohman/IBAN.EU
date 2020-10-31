@@ -6,12 +6,11 @@
 // Last Modified By : Mustafizur Rohman
 // Last Modified On : 10-31-2020
 // ***********************************************************************
-// <copyright file="Andorra.cs" company="IBANEU.Lib">
+// <copyright file="Austria.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
 using System;
@@ -19,32 +18,28 @@ using System;
 namespace IBANEU.Lib.Customizations
 {
     /// <summary>
-    /// Class Andorra.
+    /// Class Austria.
     /// </summary>
-    internal class Andorra : CustomizationBase
+    internal class Austria : CustomizationBase
     {
-
         /// <summary>
-        /// Gets or sets the length of the iban.
+        /// Gets the length of the iban.
         /// </summary>
         /// <value>The length of the iban.</value>
-        internal override int IBANLength => 24;
+        internal override int IBANLength => 20;
 
         /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
-        /// <returns>IBANDto.</returns>
-        /// <exception cref="Exception">Andorran IBANs must have {IBANLength} characters</exception>
-        /// <exception cref="Exception">Andorran BankCode may contain only numbers.</exception>
-        /// <exception cref="Exception">Andorran BranchCode may contain only numbers.</exception>
+        /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
+        /// <exception cref="NotImplementedException"></exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
-
             ibanAsString = ibanAsString.RemoveSpaces();
 
             if (ibanAsString.Length != IBANLength)
-                throw new Exception($"Andorran IBANs must have {IBANLength} characters");
+                throw new Exception($"Austrian IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
@@ -53,24 +48,20 @@ namespace IBANEU.Lib.Customizations
 
             var checksum = ibanAsString.Substring(2, 2);
 
-            ibanDto.BankCode = ibanAsString.Substring(4, 4);
+            ibanDto.BankCode = ibanAsString.Substring(4, 5);
+            ibanDto.BranchCode = ibanDto.BankCode;
 
             if (!ibanDto.BankCode.ContainsOnlyNumbers())
-                throw new Exception("Andorran BankCode may contain only numbers.");
+                throw new Exception("Bank and Branc does from Austria may contain only numbers.");
 
-            ibanDto.BranchCode = ibanAsString.Substring(10, 4);
-
-            if (!ibanDto.BranchCode.ContainsOnlyNumbers())
-                throw new Exception("Andorran BranchCode may contain only numbers.");
-
-            ibanDto.AccountNumber = ibanAsString.Substring(12, 12);
+            ibanDto.AccountNumber = ibanAsString.Substring(9, 11);
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "AD" + Space + checksum + Space +
-                                         ibanDto.BankCode + Space + ibanDto.BranchCode
-                                         + Space + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces =
+                "AT" + Space + checksum + Space + ibanDto.BankCode + Space + ibanDto.AccountNumber;
 
             return ibanDto;
+
         }
     }
 }

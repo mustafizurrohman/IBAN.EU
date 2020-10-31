@@ -33,5 +33,7 @@ namespace IBANEU.Lib.Customizations
         /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
         // ReSharper disable once MemberCanBeProtected.Global
         internal abstract IBANDto ParseIbanFromString(string ibanAsString);
+
+        internal string Space = " ";
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-25-2020
+// Last Modified On : 10-31-2020
 // ***********************************************************************
 // <copyright file="CountryHelper.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -37,7 +37,8 @@ namespace IBANEU.Lib.Helper
             { "LU", "Luxembourg" },
             { "AX", "Aland Islands"},
             { "AL", "Albania"},
-            { "AD", "Andorra" }
+            { "AD", "Andorra" },
+            { "AT", "Austria" }
         };
 
         /// <summary>
@@ -66,6 +67,12 @@ namespace IBANEU.Lib.Helper
             return CustomizedCountries[countryCode];
         }
 
+        /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <param name="ibanString">The iban string.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="ArgumentException">No country code found.</exception>
         public static string GetCountryCode(string ibanString)
         {
             if (ibanString.Length < 2)

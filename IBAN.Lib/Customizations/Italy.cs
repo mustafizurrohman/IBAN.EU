@@ -4,7 +4,7 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-25-2020
+// Last Modified On : 10-31-2020
 // ***********************************************************************
 // <copyright file="Italy.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -24,8 +24,20 @@ namespace IBANEU.Lib.Customizations
     internal class Italy : CustomizationBase
     {
 
+        /// <summary>
+        /// Gets or sets the length of the iban.
+        /// </summary>
+        /// <value>The length of the iban.</value>
         internal override int IBANLength => 27;
 
+        /// <summary>
+        /// Parses the iban from string.
+        /// </summary>
+        /// <param name="ibanAsString">The iban as string.</param>
+        /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
+        /// <exception cref="Exception">Italian IBANs must have {IBANLength} characters</exception>
+        /// <exception cref="Exception">Italian Bank codes may contain only numbers.</exception>
+        /// <exception cref="Exception">Italian Branch codes may contain only numbers.</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
@@ -54,8 +66,8 @@ namespace IBANEU.Lib.Customizations
             ibanDto.AccountNumber = ibanAsString.Substring(15, 12);
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "IT" + " " + checksum + " " + checkChar + " " + ibanDto.BankCode
-                                         + " " + ibanDto.BranchCode + " " + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = "IT" + Space + checksum + Space + checkChar + Space + ibanDto.BankCode
+                                         + Space + ibanDto.BranchCode + Space + ibanDto.AccountNumber;
 
             return ibanDto;
 

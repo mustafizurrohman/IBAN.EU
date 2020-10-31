@@ -4,7 +4,7 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-25-2020
+// Last Modified On : 10-31-2020
 // ***********************************************************************
 // <copyright file="Spain.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -24,6 +24,10 @@ namespace IBANEU.Lib.Customizations
     internal class Spain : CustomizationBase
     {
 
+        /// <summary>
+        /// Gets or sets the length of the iban.
+        /// </summary>
+        /// <value>The length of the iban.</value>
         internal override int IBANLength => 24;
 
         /// <summary>
@@ -31,16 +35,19 @@ namespace IBANEU.Lib.Customizations
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANDto.</returns>
-        /// <exception cref="Exception">Spanish IBANs must have 24 characters</exception>
+        /// <exception cref="Exception">Spanish IBANs must have {IBANLength} characters</exception>
         /// <exception cref="Exception">Spanish Checksums may contain only numbers.</exception>
         /// <exception cref="Exception">Spanish Bank codes may contain only numbers.</exception>
         /// <exception cref="Exception">Spanish Branch codes may contain only numbers.</exception>
         /// <exception cref="Exception">Spanish CheckDigit may contain only numbers.</exception>
         /// <exception cref="Exception">Spanish Account Numbers may contain only numbers.</exception>
+        /// <exception cref="Exception">Spanish IBANs must have 24 characters</exception>
+        /// <exception cref="Exception">Spanish Checksums may contain only numbers.</exception>
+        /// <exception cref="Exception">Spanish Bank codes may contain only numbers.</exception>
+        /// <exception cref="Exception">Spanish Branch codes may contain only numbers.</exception>
+        /// <exception cref="Exception">Spanish CheckDigit may contain only numbers.</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
-            var space = " ";
-
             ibanAsString = ibanAsString.RemoveSpaces();
 
             if (ibanAsString.Length != IBANLength)
@@ -78,9 +85,9 @@ namespace IBANEU.Lib.Customizations
                 throw new Exception("Spanish Account Numbers may contain only numbers.");
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "ES" + space + checksum + space
-                                         + ibanDto.BankCode + space + ibanDto.BranchCode
-                                         + space + checkDigit + space + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = "ES" + Space + checksum + Space
+                                         + ibanDto.BankCode + Space + ibanDto.BranchCode
+                                         + Space + checkDigit + Space + ibanDto.AccountNumber;
 
 
             return ibanDto;

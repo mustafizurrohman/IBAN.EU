@@ -1,14 +1,44 @@
-﻿using IBANEU.Lib.Core;
+﻿// ***********************************************************************
+// Assembly         : IBANEU.Lib
+// Author           : Mustafizur Rohman
+// Created          : 10-25-2020
+//
+// Last Modified By : Mustafizur Rohman
+// Last Modified On : 10-31-2020
+// ***********************************************************************
+// <copyright file="Switzerland.cs" company="IBANEU.Lib">
+//     Copyright (c) Personal. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
 using System;
 
 namespace IBANEU.Lib.Customizations
 {
+    /// <summary>
+    /// Class Switzerland.
+    /// Implements the <see cref="IBANEU.Lib.Customizations.CustomizationBase" />
+    /// </summary>
+    /// <seealso cref="IBANEU.Lib.Customizations.CustomizationBase" />
     internal class Switzerland : CustomizationBase
     {
 
+        /// <summary>
+        /// Gets or sets the length of the iban.
+        /// </summary>
+        /// <value>The length of the iban.</value>
         internal override int IBANLength => 21;
 
+        /// <summary>
+        /// Parses the iban from string.
+        /// </summary>
+        /// <param name="ibanAsString">The iban as string.</param>
+        /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
+        /// <exception cref="Exception">Swiss IBANs must have {IBANLength} characters</exception>
+        /// <exception cref="Exception">Swiss Bank codes may contain only numbers.</exception>
+        /// <exception cref="Exception">Swiss Account numbers may contain only numbers.</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();

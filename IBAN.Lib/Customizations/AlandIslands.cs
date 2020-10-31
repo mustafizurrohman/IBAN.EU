@@ -23,6 +23,10 @@ namespace IBANEU.Lib.Customizations
     /// </summary>
     internal class AlandIslands : CustomizationBase
     {
+        /// <summary>
+        /// Gets or sets the length of the iban.
+        /// </summary>
+        /// <value>The length of the iban.</value>
         internal override int IBANLength => 18;
 
 
@@ -31,8 +35,9 @@ namespace IBANEU.Lib.Customizations
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANDto.</returns>
-        /// <exception cref="Exception">IBANs from Aland Islands must have 18 characters</exception>
+        /// <exception cref="Exception">IBANs from Aland Islands must have {IBANLength} characters</exception>
         /// <exception cref="Exception">Bank and Branch code form Aland Islands may contain only numbers.</exception>
+        /// <exception cref="Exception">IBANs from Aland Islands must have 18 characters</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
@@ -56,11 +61,9 @@ namespace IBANEU.Lib.Customizations
 
             ibanDto.AccountNumber = ibanAsString.Substring(10, 8);
 
-            var space = " ";
-
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "AX" + space + checksum + space
-                                         + ibanDto.BankCode + space + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = "AX" + Space + checksum + Space
+                                         + ibanDto.BankCode + Space + ibanDto.AccountNumber;
 
             return ibanDto;
         }

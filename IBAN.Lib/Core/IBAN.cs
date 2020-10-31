@@ -4,7 +4,7 @@
 // Created          : 10-24-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-24-2020
+// Last Modified On : 10-31-2020
 // ***********************************************************************
 // <copyright file="IBAN.cs" company="IBAN.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -77,6 +77,11 @@ namespace IBANEU.Lib.Core
         }
 
 
+        /// <summary>
+        /// Verifies the hash.
+        /// </summary>
+        /// <param name="ibanAsString">The iban as string.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         private bool VerifyHash(string ibanAsString)
         {
             var newIban = ibanAsString.Substring(4) + ibanAsString.Substring(0, 4);
@@ -88,6 +93,13 @@ namespace IBANEU.Lib.Core
             return remainder == 1;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IBAN"/> class.
+        /// </summary>
+        /// <param name="ibanAsString">The iban as string.</param>
+        /// <exception cref="ArgumentException">IBAN cannot contain special characters.</exception>
+        /// <exception cref="ArgumentException">Invalid IBAN. Hash verification failed.</exception>
+        /// <exception cref="NotImplementedException">Country not yet suported.</exception>
         public IBAN(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces().ToUpperInvariant();
@@ -114,6 +126,7 @@ namespace IBANEU.Lib.Core
                 "AX" => new AlandIslands().ParseIbanFromString(ibanAsString),
                 "AL" => new Albania().ParseIbanFromString(ibanAsString),
                 "AD" => new Andorra().ParseIbanFromString(ibanAsString),
+                "AT" => new Austria().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("Country not supported yet.")
             };
 
@@ -124,6 +137,12 @@ namespace IBANEU.Lib.Core
             this.AsStringWithSpaces = parsed.AsStringWithSpaces;
         }
 
+        /// <summary>
+        /// Tries the parse.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <param name="result">The result.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool TryParse(string? s, out IBAN result)
         {
 

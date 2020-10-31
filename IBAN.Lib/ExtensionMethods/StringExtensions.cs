@@ -4,7 +4,7 @@
 // Created          : 10-24-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-24-2020
+// Last Modified On : 10-25-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="IBAN.Lib">
 //     Copyright (c) Personal. All rights reserved.
