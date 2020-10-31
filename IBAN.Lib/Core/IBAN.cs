@@ -112,6 +112,7 @@ namespace IBANEU.Lib.Core
                 "ES" => new Spain().ParseIbanFromString(ibanAsString),
                 "LU" => new Luxembourg().ParseIbanFromString(ibanAsString),
                 "AX" => new AlandIslands().ParseIbanFromString(ibanAsString),
+                "AL" => new Albania().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("Country not supported yet.")
             };
 

@@ -59,7 +59,11 @@ namespace IBANEU.Lib.ExtensionMethods
         public static void PrintToConsole(this IBAN iban)
         {
             if (iban is null)
+            {
+                Console.WriteLine("No IBAN to print.");
+                Console.WriteLine();
                 return;
+            }
 
             Console.WriteLine("Country          : " + iban.Country);
             Console.WriteLine("CountryCode      : " + iban.CountryCode);

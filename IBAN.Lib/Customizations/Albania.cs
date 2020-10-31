@@ -14,7 +14,6 @@
 
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
-using IBANEU.Lib.Helper;
 using System;
 
 namespace IBANEU.Lib.Customizations
@@ -34,10 +33,27 @@ namespace IBANEU.Lib.Customizations
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
 
-            ibanDto.CountryCode = CountryHelper.GetCountryCode(ibanAsString);
-            ibanDto.Country = CountryHelper.GetCountryFromIBANString(ibanAsString);
+            ibanDto.AssignCountryAndCode(ibanAsString);
 
-            return new IBANDto();
+            ibanDto.BankCode = ibanAsString.Substring(4, 8);
+
+            if (!ibanDto.BankCode.ContainsOnlyNumbers())
+                throw new Exception("Albanian Bank and Branch codes may contain only numbers.");
+
+            ibanDto.BranchCode = ibanDto.BankCode;
+
+            ibanDto.AccountNumber = ibanAsString.Substring(12, 16);
+
+            var checksum = ibanAsString.Substring(2, 2);
+
+            var space = " ";
+
+            ibanDto.AsString = ibanAsString;
+
+            ibanDto.AsStringWithSpaces = "AL" + space + checksum + space
+                                         + ibanDto.BankCode + space + ibanDto.AccountNumber;
+
+            return ibanDto;
         }
     }
 
