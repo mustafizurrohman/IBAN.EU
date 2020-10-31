@@ -33,15 +33,15 @@ namespace IBANEU.Showcase
         {
             List<string> IBANList = new List<string>()
             {
-                "AL43879383135295534265546655",
-                "AL89879383139737175359167137"
+                "AD 12 0001 2030 200359100100"
             };
 
 
 
             foreach (var ibanString in IBANList)
             {
-                _ = IBAN.TryParse(ibanString, out IBAN ibanResult);
+                // _ =
+                IBAN.TryParse(ibanString, out IBAN ibanResult);
                 Console.WriteLine(ibanResult);
                 ibanResult.PrintToConsole();
             }

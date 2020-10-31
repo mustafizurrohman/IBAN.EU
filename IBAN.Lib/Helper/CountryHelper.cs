@@ -36,7 +36,8 @@ namespace IBANEU.Lib.Helper
             { "ES", "Spain" },
             { "LU", "Luxembourg" },
             { "AX", "Aland Islands"},
-            { "AL", "Albania"}
+            { "AL", "Albania"},
+            { "AD", "Andorra" }
         };
 
         /// <summary>
