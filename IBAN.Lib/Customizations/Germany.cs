@@ -30,7 +30,7 @@ namespace IBANEU.Lib.Customizations
         /// Gets or sets the length of the iban.
         /// </summary>
         /// <value>The length of the iban.</value>
-        internal override int IBANLength => 22;
+        protected override int IBANLength => 22;
 
         /// <summary>
         /// Parses the iban from string.
@@ -44,7 +44,7 @@ namespace IBANEU.Lib.Customizations
         {
             ibanAsString = ibanAsString.RemoveSpaces();
 
-            if (ibanAsString.Length != 22)
+            if (ibanAsString.Length != IBANLength)
                 throw new Exception($"German IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer

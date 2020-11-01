@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : IBANEU.Lib
 // Author           : Mustafizur Rohman
-// Created          : 10-31-2020
+// Created          : 11-01-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-31-2020
+// Last Modified On : 11-01-2020
 // ***********************************************************************
-// <copyright file="Albania.cs" company="IBANEU.Lib">
+// <copyright file="Belarus.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,9 +19,11 @@ using System;
 namespace IBANEU.Lib.Customizations
 {
     /// <summary>
-    /// Class Albania.
+    /// Class Belarus.
+    /// Implements the <see cref="IBANEU.Lib.Customizations.CustomizationBase" />
     /// </summary>
-    internal class Albania : CustomizationBase
+    /// <seealso cref="IBANEU.Lib.Customizations.CustomizationBase" />
+    internal class Belarus : CustomizationBase
     {
         /// <summary>
         /// Gets or sets the length of the iban.
@@ -34,38 +36,43 @@ namespace IBANEU.Lib.Customizations
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
-        /// <exception cref="Exception">Albanian Islands must have {IBANLength} characters.</exception>
-        /// <exception cref="Exception">Albanian Bank and Branch codes may contain only numbers.</exception>
+        /// <exception cref="NotImplementedException"></exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
 
             if (ibanAsString.Length != IBANLength)
-                throw new Exception($"Albanian Islands must have {IBANLength} characters.");
+                throw new Exception($"Belarusian IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
 
             ibanDto.AssignCountryAndCode(ibanAsString);
 
-            ibanDto.BankCode = ibanAsString.Substring(4, 8);
+            var checksum = ibanAsString.Substring(2, 2);
 
-            if (!ibanDto.BankCode.ContainsOnlyNumbers())
-                throw new Exception("Albanian Bank and Branch codes may contain only numbers.");
+            if (!checksum.ContainsOnlyNumbers())
+                throw new Exception("Belarusian checksums may contain only numbers.");
 
-            ibanDto.BranchCode = ibanDto.BankCode;
+            ibanDto.BankCode = ibanAsString.Substring(4, 4);
+
+            if (!ibanDto.BankCode.ContainsOnlyCharacters())
+                throw new Exception("Belarusian bankcodes may contain only characters.");
+
+            ibanDto.BranchCode = ibanAsString.Substring(8, 4);
+
+            if (!ibanDto.BranchCode.ContainsOnlyNumbers())
+                throw new Exception("Belarusian BranchCodes may contain only numbers.");
 
             ibanDto.AccountNumber = ibanAsString.Substring(12, 16);
 
-            var checksum = ibanAsString.Substring(2, 2);
-
             ibanDto.AsString = ibanAsString;
 
-            ibanDto.AsStringWithSpaces = "AL" + Space + checksum + Space
-                                         + ibanDto.BankCode + Space + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = "BY" + Space + checksum + Space
+                                         + ibanDto.BankCode + Space + ibanDto.BranchCode + Space +
+                                         ibanDto.AccountNumber;
 
             return ibanDto;
         }
     }
-
 }

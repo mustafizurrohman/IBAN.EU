@@ -27,7 +27,7 @@ namespace IBANEU.Lib.Customizations
         /// Gets or sets the length of the iban.
         /// </summary>
         /// <value>The length of the iban.</value>
-        internal override int IBANLength => 18;
+        protected override int IBANLength => 18;
 
 
         /// <summary>

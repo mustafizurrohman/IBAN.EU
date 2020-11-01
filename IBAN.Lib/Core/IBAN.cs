@@ -127,6 +127,7 @@ namespace IBANEU.Lib.Core
                 "AL" => new Albania().ParseIbanFromString(ibanAsString),
                 "AD" => new Andorra().ParseIbanFromString(ibanAsString),
                 "AT" => new Austria().ParseIbanFromString(ibanAsString),
+                "BY" => new Belarus().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("Country not supported yet.")
             };
 
@@ -138,15 +139,15 @@ namespace IBANEU.Lib.Core
         }
 
         /// <summary>
-        /// Tries the parse.
+        /// Tries to parse an IBAN from string and returns the object if the parse is succesful. 
         /// </summary>
-        /// <param name="s">The s.</param>
+        /// <param name="sourceString">The sourceString.</param>
         /// <param name="result">The result.</param>
-        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        public static bool TryParse(string? s, out IBAN result)
+        /// <returns><c>true</c> if parse is succesful, <c>false</c> otherwise.</returns>
+        public static bool TryParse(string? sourceString, out IBAN result)
         {
 
-            if (string.IsNullOrWhiteSpace(s))
+            if (string.IsNullOrWhiteSpace(sourceString))
             {
                 result = null;
                 return false;
@@ -154,7 +155,7 @@ namespace IBANEU.Lib.Core
 
             try
             {
-                result = new IBAN(s);
+                result = new IBAN(sourceString);
                 return true;
             }
             catch

@@ -11,7 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using IBANEU.Lib.Core;
+using System;
 
 namespace IBANEU.Lib.Customizations
 {
@@ -24,7 +26,7 @@ namespace IBANEU.Lib.Customizations
         /// Gets or sets the length of the iban.
         /// </summary>
         /// <value>The length of the iban.</value>
-        internal abstract int IBANLength { get; }
+        protected abstract int IBANLength { get; }
 
         /// <summary>
         /// Parses the iban from string.
@@ -34,6 +36,28 @@ namespace IBANEU.Lib.Customizations
         // ReSharper disable once MemberCanBeProtected.Global
         internal abstract IBANDto ParseIbanFromString(string ibanAsString);
 
+        /// <summary>
+        /// The space
+        /// </summary>
         internal string Space = " ";
+
+        /// <summary>
+        /// The maximum length
+        /// </summary>
+        private readonly int MaxLength = 35;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomizationBase"/> class.
+        /// </summary>
+        /// <exception cref="Exception">Length of IBAN cannot be more than {MaxLength}</exception>
+        internal CustomizationBase()
+        {
+            // ReSharper disable once VirtualMemberCallInConstructor
+            if (IBANLength > MaxLength)
+            {
+                throw new Exception($"Length of IBAN cannot be more than {MaxLength}");
+            }
+        }
+
     }
 }

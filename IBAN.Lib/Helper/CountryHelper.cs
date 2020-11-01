@@ -38,7 +38,8 @@ namespace IBANEU.Lib.Helper
             { "AX", "Aland Islands"},
             { "AL", "Albania"},
             { "AD", "Andorra" },
-            { "AT", "Austria" }
+            { "AT", "Austria" },
+            { "BY", "Belarus" }
         };
 
         /// <summary>
