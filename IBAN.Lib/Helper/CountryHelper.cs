@@ -43,7 +43,8 @@ namespace IBANEU.Lib.Helper
             { "BE", "Belgium" },
             { "BA", "Bosnia and Herzegovina" },
             { "BG", "Bulgaria" },
-            { "HR", "Croatia" }
+            { "HR", "Croatia" },
+            { "CY", "Cyprus" }
         };
 
         /// <summary>
