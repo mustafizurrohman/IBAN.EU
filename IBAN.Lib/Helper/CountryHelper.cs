@@ -42,7 +42,8 @@ namespace IBANEU.Lib.Helper
             { "BY", "Belarus" },
             { "BE", "Belgium" },
             { "BA", "Bosnia and Herzegovina" },
-            { "BG", "Bulgaria" }
+            { "BG", "Bulgaria" },
+            { "HR", "Croatia" }
         };
 
         /// <summary>
