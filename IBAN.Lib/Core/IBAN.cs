@@ -129,6 +129,8 @@ namespace IBANEU.Lib.Core
                 "AT" => new Austria().ParseIbanFromString(ibanAsString),
                 "BY" => new Belarus().ParseIbanFromString(ibanAsString),
                 "BE" => new Belgium().ParseIbanFromString(ibanAsString),
+                "BA" => new BosniaAndHerzegovina().ParseIbanFromString(ibanAsString),
+                "BG" => new Bulgaria().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("Country not supported yet.")
             };
 
