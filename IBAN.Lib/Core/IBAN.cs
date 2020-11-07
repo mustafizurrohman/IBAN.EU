@@ -31,6 +31,9 @@ namespace IBANEU.Lib.Core
     /// </summary>
     public class IBAN
     {
+
+        #region -- Attributes --
+
         /// <summary>
         /// Gets the country code.
         /// </summary>
@@ -67,6 +70,10 @@ namespace IBANEU.Lib.Core
         /// <value>As string with spaces.</value>
         private string AsStringWithSpaces { get; }
 
+        #endregion
+
+        #region -- ToString Override --
+
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
@@ -76,22 +83,9 @@ namespace IBANEU.Lib.Core
             return AsStringWithSpaces;
         }
 
+        #endregion
 
-        /// <summary>
-        /// Verifies the hash.
-        /// </summary>
-        /// <param name="ibanAsString">The iban as string.</param>
-        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        private bool VerifyHash(string ibanAsString)
-        {
-            var newIban = ibanAsString.Substring(4) + ibanAsString.Substring(0, 4);
-
-            newIban = Regex.Replace(newIban, @"\D", match => (match.Value[0] - 55).ToString());
-
-            var remainder = BigInteger.Parse(newIban) % 97;
-
-            return remainder == 1;
-        }
+        #region -- Constructor -- 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IBAN"/> class.
@@ -115,26 +109,7 @@ namespace IBANEU.Lib.Core
             if (!CountryHelper.IsCountryCustomized(this.CountryCode))
                 throw new NotImplementedException("Country not yet suported.");
 
-            IBANDto parsed = this.CountryCode switch
-            {
-                "DE" => new Germany().ParseIbanFromString(ibanAsString),
-                "CH" => new Switzerland().ParseIbanFromString(ibanAsString),
-                "FR" => new France().ParseIbanFromString(ibanAsString),
-                "IT" => new Italy().ParseIbanFromString(ibanAsString),
-                "ES" => new Spain().ParseIbanFromString(ibanAsString),
-                "LU" => new Luxembourg().ParseIbanFromString(ibanAsString),
-                "AX" => new AlandIslands().ParseIbanFromString(ibanAsString),
-                "AL" => new Albania().ParseIbanFromString(ibanAsString),
-                "AD" => new Andorra().ParseIbanFromString(ibanAsString),
-                "AT" => new Austria().ParseIbanFromString(ibanAsString),
-                "BY" => new Belarus().ParseIbanFromString(ibanAsString),
-                "BE" => new Belgium().ParseIbanFromString(ibanAsString),
-                "BA" => new BosniaAndHerzegovina().ParseIbanFromString(ibanAsString),
-                "BG" => new Bulgaria().ParseIbanFromString(ibanAsString),
-                "HR" => new Croatia().ParseIbanFromString(ibanAsString),
-                "CY" => new Cyprus().ParseIbanFromString(ibanAsString),
-                _ => throw new Exception("Country not supported yet.")
-            };
+            IBANDto parsed = GetIBANDto(ibanAsString);
 
             this.Country = parsed.Country;
             this.AccountNumber = parsed.AccountNumber;
@@ -142,6 +117,10 @@ namespace IBANEU.Lib.Core
             this.BankCode = parsed.BankCode;
             this.AsStringWithSpaces = parsed.AsStringWithSpaces;
         }
+
+        #endregion
+
+        #region -- TryParse Method --
 
         /// <summary>
         /// Tries to parse an IBAN from string and returns the object if the parse is succesful. 
@@ -171,6 +150,58 @@ namespace IBANEU.Lib.Core
         }
 
 
+        #endregion
+
+        #region -- Private: Verify Hash Routine --
+
+        /// <summary>
+        /// Verifies the hash.
+        /// </summary>
+        /// <param name="ibanAsString">The iban as string.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+        private bool VerifyHash(string ibanAsString)
+        {
+            var newIban = ibanAsString.Substring(4) + ibanAsString.Substring(0, 4);
+
+            newIban = Regex.Replace(newIban, @"\D", match => (match.Value[0] - 55).ToString());
+
+            var remainder = BigInteger.Parse(newIban) % 97;
+
+            return remainder == 1;
+        }
+
+        #endregion
+
+        #region -- Private: Method to parse string to IBAN DTO --
+
+        private IBANDto GetIBANDto(string ibanAsString)
+        {
+            var parsed = this.CountryCode switch
+            {
+                "DE" => new Germany().ParseIbanFromString(ibanAsString),
+                "CH" => new Switzerland().ParseIbanFromString(ibanAsString),
+                "FR" => new France().ParseIbanFromString(ibanAsString),
+                "IT" => new Italy().ParseIbanFromString(ibanAsString),
+                "ES" => new Spain().ParseIbanFromString(ibanAsString),
+                "LU" => new Luxembourg().ParseIbanFromString(ibanAsString),
+                "AX" => new AlandIslands().ParseIbanFromString(ibanAsString),
+                "AL" => new Albania().ParseIbanFromString(ibanAsString),
+                "AD" => new Andorra().ParseIbanFromString(ibanAsString),
+                "AT" => new Austria().ParseIbanFromString(ibanAsString),
+                "BY" => new Belarus().ParseIbanFromString(ibanAsString),
+                "BE" => new Belgium().ParseIbanFromString(ibanAsString),
+                "BA" => new BosniaAndHerzegovina().ParseIbanFromString(ibanAsString),
+                "BG" => new Bulgaria().ParseIbanFromString(ibanAsString),
+                "HR" => new Croatia().ParseIbanFromString(ibanAsString),
+                "CY" => new Cyprus().ParseIbanFromString(ibanAsString),
+                "CZ" => new CzechRepublic().ParseIbanFromString(ibanAsString),
+                _ => throw new Exception("Country not supported yet.")
+            };
+
+            return parsed;
+        }
+
+        #endregion
 
 
     }

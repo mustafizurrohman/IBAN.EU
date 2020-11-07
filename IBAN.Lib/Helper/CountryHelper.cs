@@ -44,7 +44,8 @@ namespace IBANEU.Lib.Helper
             { "BA", "Bosnia and Herzegovina" },
             { "BG", "Bulgaria" },
             { "HR", "Croatia" },
-            { "CY", "Cyprus" }
+            { "CY", "Cyprus" },
+            { "CZ", "Czech Republic" }
         };
 
         /// <summary>

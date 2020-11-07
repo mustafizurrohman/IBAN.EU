@@ -58,14 +58,16 @@ namespace IBANEU.Showcase
                 //"BA 39 129 007 9401028494",
                 //"BG80BNBG 9661 1020345678",
                 //"HR1210010051863000160",
-                "CY 17002001280000001200527600"
+                //"cY 170020012800000012005276      00",
+                //"DE49 2307 0700 0850 1256 01",
+                "CZ 65 0800 000019 2000145399"
             };
 
 
 
             foreach (var ibanString in IBANList)
             {
-                _ = IBAN.TryParse(ibanString, out IBAN ibanResult);
+                _ = IBAN.TryParse(ibanString, out var ibanResult);
                 Console.WriteLine(ibanResult);
                 ibanResult.PrintToConsole();
             }
