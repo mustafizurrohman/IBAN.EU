@@ -31,17 +31,19 @@ namespace IBANEU.Lib.Customizations
         protected abstract int IBANLength { get; }
 
         /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <value>The country code.</value>
+        protected abstract string CountryCode { get; }
+
+        /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
         internal abstract IBANDto ParseIbanFromString(string ibanAsString);
 
-        /// <summary>
-        /// Gets the country code.
-        /// </summary>
-        /// <value>The country code.</value>
-        protected abstract string CountryCode { get; }
+
 
         /// <summary>
         /// The space

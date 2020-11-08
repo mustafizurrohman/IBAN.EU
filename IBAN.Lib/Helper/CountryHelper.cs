@@ -49,7 +49,8 @@ namespace IBANEU.Lib.Helper
             { "DK", "Denmark" },
             { "EE", "Estonia" },
             { "FO", "Faroe Islands" },
-            { "FI", "Finland" }
+            { "FI", "Finland" },
+            { "GI", "Gibraltar" }
         };
 
         /// <summary>
