@@ -204,6 +204,7 @@ namespace IBANEU.Lib.Core
                 "DK" => new Denmark().ParseIbanFromString(ibanAsString),
                 "EE" => new Estonia().ParseIbanFromString(ibanAsString),
                 "FO" => new FaroeIslands().ParseIbanFromString(ibanAsString),
+                "FI" => new Finland().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("Country not supported yet.")
             };
 
