@@ -4,7 +4,7 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-31-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="IBANDto.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -80,6 +80,7 @@ namespace IBANEU.Lib.Core
         {
             this.CountryCode = CountryHelper.GetCountryCode(ibanAsString);
             this.Country = CountryHelper.GetCountryFromIBANString(ibanAsString);
+            this.AsString = ibanAsString;
         }
 
     }

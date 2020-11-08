@@ -4,7 +4,7 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-31-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="Germany.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -15,15 +15,16 @@
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
 using System;
+using System.Collections.Generic;
 
 namespace IBANEU.Lib.Customizations
 {
 
     /// <summary>
     /// Class Germany.
-    /// Implements the <see cref="IBANEU.Lib.Customizations.CustomizationBase" />
+    /// Implements the <see cref="CustomizationBase" />
     /// </summary>
-    /// <seealso cref="IBANEU.Lib.Customizations.CustomizationBase" />
+    /// <seealso cref="CustomizationBase" />
     internal class Germany : CustomizationBase
     {
         /// <summary>
@@ -33,6 +34,12 @@ namespace IBANEU.Lib.Customizations
         protected override int IBANLength => 22;
 
         /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <value>The country code.</value>
+        protected override string CountryCode => "DE";
+
+        /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
@@ -40,6 +47,8 @@ namespace IBANEU.Lib.Customizations
         /// <exception cref="Exception">German IBANs must have {IBANLength} characters</exception>
         /// <exception cref="Exception">German Bank Codes may contain only numbers.</exception>
         /// <exception cref="Exception">German Account numbers may contain only numbers.</exception>
+        /// <exception cref="Exception">German IBANs must have {IBANLength} characters</exception>
+        /// <exception cref="Exception">German Bank Codes may contain only numbers.</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
@@ -66,7 +75,11 @@ namespace IBANEU.Lib.Customizations
             var checkSum = ibanAsString.Substring(2, 2);
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "DE" + Space + checkSum + Space + ibanDto.BranchCode + Space + ibanDto.AccountNumber;
+
+            ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>
+            {
+                checkSum, ibanDto.BranchCode, ibanDto.AccountNumber
+            });
 
             return ibanDto;
         }

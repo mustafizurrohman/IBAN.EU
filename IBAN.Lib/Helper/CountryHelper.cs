@@ -4,7 +4,7 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-31-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="CountryHelper.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -47,7 +47,8 @@ namespace IBANEU.Lib.Helper
             { "CY", "Cyprus" },
             { "CZ", "Czech Republic" },
             { "DK", "Denmark" },
-            { "EE", "Estonia" }
+            { "EE", "Estonia" },
+            { "FO", "Faroe Islands" }
         };
 
         /// <summary>

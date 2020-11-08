@@ -4,7 +4,7 @@
 // Created          : 11-07-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 11-07-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="Estonia.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -15,6 +15,7 @@
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
 using System;
+using System.Collections.Generic;
 
 namespace IBANEU.Lib.Customizations
 {
@@ -33,10 +34,20 @@ namespace IBANEU.Lib.Customizations
         protected override int IBANLength => 20;
 
         /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <value>The country code.</value>
+        protected override string CountryCode => "EE";
+
+        /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
+        /// <exception cref="Exception">German IBANs must have {IBANLength} characters</exception>
+        /// <exception cref="Exception">Estonian Bank Codes may contain only numbers</exception>
+        /// <exception cref="Exception">Estonian Branch Codes may contain only numbers</exception>
+        /// <exception cref="Exception">Estonian Account Numbers may contain only numbers</exception>
         /// <exception cref="NotImplementedException"></exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
@@ -68,8 +79,10 @@ namespace IBANEU.Lib.Customizations
                 throw new Exception("Estonian Account Numbers may contain only numbers");
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "EE" + Space + checksum + Space + ibanDto.BankCode + Space + ibanDto.BranchCode
-                                         + Space + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>
+            {
+                checksum, ibanDto.BankCode, ibanDto.BranchCode, ibanDto.AccountNumber
+            });
 
             return ibanDto;
         }

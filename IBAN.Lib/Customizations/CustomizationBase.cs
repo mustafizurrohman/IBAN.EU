@@ -4,7 +4,7 @@
 // Created          : 10-31-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-31-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="CustomizationBase.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -14,6 +14,8 @@
 
 using IBANEU.Lib.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IBANEU.Lib.Customizations
 {
@@ -33,8 +35,13 @@ namespace IBANEU.Lib.Customizations
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
-        // ReSharper disable once MemberCanBeProtected.Global
         internal abstract IBANDto ParseIbanFromString(string ibanAsString);
+
+        /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <value>The country code.</value>
+        protected abstract string CountryCode { get; }
 
         /// <summary>
         /// The space
@@ -47,7 +54,7 @@ namespace IBANEU.Lib.Customizations
         private readonly int MaxLength = 35;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CustomizationBase"/> class.
+        /// Initializes a new instance of the <see cref="CustomizationBase" /> class.
         /// </summary>
         /// <exception cref="Exception">Length of IBAN cannot be more than {MaxLength}</exception>
         internal CustomizationBase()
@@ -57,6 +64,16 @@ namespace IBANEU.Lib.Customizations
             {
                 throw new Exception($"Length of IBAN cannot be more than {MaxLength}");
             }
+        }
+
+        /// <summary>
+        /// Formats the iban string.
+        /// </summary>
+        /// <param name="parts">The parts.</param>
+        /// <returns>System.String.</returns>
+        internal string FormatIBANString(IEnumerable<string> parts)
+        {
+            return CountryCode + Space + parts.Aggregate((a, b) => a + Space + b);
         }
 
     }

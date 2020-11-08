@@ -64,7 +64,8 @@ namespace IBANEU.Showcase
                 "DK7650516127256298",
                 "DK1650518716377983",
                 "EE511263688364856126",
-                "EE421212643281736315"
+                "EE421212643281736315",
+                "FO2000400440116243"
             };
 
 
@@ -72,6 +73,7 @@ namespace IBANEU.Showcase
             foreach (var ibanString in IBANList)
             {
                 _ = IBAN.TryParse(ibanString, out var ibanResult);
+                Console.WriteLine(ibanString);
                 Console.WriteLine(ibanResult);
                 ibanResult.PrintToConsole();
             }

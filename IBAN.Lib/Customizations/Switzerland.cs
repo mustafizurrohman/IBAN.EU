@@ -4,16 +4,18 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-31-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="Switzerland.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
 using System;
+using System.Collections.Generic;
 
 namespace IBANEU.Lib.Customizations
 {
@@ -32,6 +34,12 @@ namespace IBANEU.Lib.Customizations
         protected override int IBANLength => 21;
 
         /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <value>The country code.</value>
+        protected override string CountryCode => "CH";
+
+        /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
@@ -39,6 +47,8 @@ namespace IBANEU.Lib.Customizations
         /// <exception cref="Exception">Swiss IBANs must have {IBANLength} characters</exception>
         /// <exception cref="Exception">Swiss Bank codes may contain only numbers.</exception>
         /// <exception cref="Exception">Swiss Account numbers may contain only numbers.</exception>
+        /// <exception cref="Exception">Swiss IBANs must have {IBANLength} characters</exception>
+        /// <exception cref="Exception">Swiss Bank codes may contain only numbers.</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
@@ -65,7 +75,11 @@ namespace IBANEU.Lib.Customizations
             var checkSum = ibanAsString.Substring(2, 2);
 
             ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "CH" + " " + checkSum + " " + ibanDto.BranchCode + " " + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>
+            {
+                checkSum, ibanDto.BranchCode, ibanDto.AccountNumber
+            });
+
 
             return ibanDto;
         }

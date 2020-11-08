@@ -4,7 +4,7 @@
 // Created          : 10-24-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-31-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="IBAN.cs" company="IBAN.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -88,12 +88,13 @@ namespace IBANEU.Lib.Core
         #region -- Constructor -- 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IBAN"/> class.
+        /// Initializes a new instance of the <see cref="IBAN" /> class.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <exception cref="ArgumentException">IBAN cannot contain special characters.</exception>
         /// <exception cref="ArgumentException">Invalid IBAN. Hash verification failed.</exception>
         /// <exception cref="NotImplementedException">Country not yet suported.</exception>
+        /// <exception cref="ArgumentException">IBAN cannot contain special characters.</exception>
         public IBAN(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces().ToUpperInvariant();
@@ -123,7 +124,7 @@ namespace IBANEU.Lib.Core
         #region -- TryParse Method --
 
         /// <summary>
-        /// Tries to parse an IBAN from string and returns the object if the parse is succesful. 
+        /// Tries to parse an IBAN from string and returns the object if the parse is succesful.
         /// </summary>
         /// <param name="sourceString">The sourceString.</param>
         /// <param name="result">The result.</param>
@@ -174,6 +175,11 @@ namespace IBANEU.Lib.Core
 
         #region -- Private: Method to parse string to IBAN DTO --
 
+        /// <summary>
+        /// Gets the iban dto.
+        /// </summary>
+        /// <param name="ibanAsString">The iban as string.</param>
+        /// <returns>IBANDto.</returns>
         private IBANDto GetIBANDto(string ibanAsString)
         {
             var parsed = this.CountryCode switch
@@ -197,6 +203,7 @@ namespace IBANEU.Lib.Core
                 "CZ" => new CzechRepublic().ParseIbanFromString(ibanAsString),
                 "DK" => new Denmark().ParseIbanFromString(ibanAsString),
                 "EE" => new Estonia().ParseIbanFromString(ibanAsString),
+                "FO" => new FaroeIslands().ParseIbanFromString(ibanAsString),
                 _ => throw new Exception("Country not supported yet.")
             };
 

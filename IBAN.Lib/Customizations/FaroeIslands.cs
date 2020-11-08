@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : IBANEU.Lib
 // Author           : Mustafizur Rohman
-// Created          : 10-25-2020
+// Created          : 11-08-2020
 //
 // Last Modified By : Mustafizur Rohman
 // Last Modified On : 11-08-2020
 // ***********************************************************************
-// <copyright file="Italy.cs" company="IBANEU.Lib">
+// <copyright file="FaroeIslands.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,64 +19,65 @@ using System.Collections.Generic;
 
 namespace IBANEU.Lib.Customizations
 {
+
     /// <summary>
-    /// Class Italy.
+    /// Class FaroeIslands.
+    /// Implements the <see cref="IBANEU.Lib.Customizations.CustomizationBase" />
     /// </summary>
-    internal class Italy : CustomizationBase
+    /// <seealso cref="IBANEU.Lib.Customizations.CustomizationBase" />
+    internal class FaroeIslands : CustomizationBase
     {
 
         /// <summary>
         /// Gets or sets the length of the iban.
         /// </summary>
         /// <value>The length of the iban.</value>
-        protected override int IBANLength => 27;
+        protected override int IBANLength => 18;
 
         /// <summary>
         /// Gets the country code.
         /// </summary>
         /// <value>The country code.</value>
-        protected override string CountryCode => "IT";
+        protected override string CountryCode => "FO";
 
         /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
-        /// <exception cref="Exception">Italian IBANs must have {IBANLength} characters</exception>
-        /// <exception cref="Exception">Italian Bank codes may contain only numbers.</exception>
-        /// <exception cref="Exception">Italian Branch codes may contain only numbers.</exception>
-        /// <exception cref="Exception">Italian IBANs must have {IBANLength} characters</exception>
-        /// <exception cref="Exception">Italian Bank codes may contain only numbers.</exception>
+        /// <exception cref="Exception">German IBANs must have {IBANLength} characters</exception>
+        /// <exception cref="Exception">Bank Codes from Faroe Islands may contain only numbers.</exception>
+        /// <exception cref="Exception">Account Numbers from Faroe Islands may contain only numbers.</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
 
             if (ibanAsString.Length != IBANLength)
-                throw new Exception($"Italian IBANs must have {IBANLength} characters");
+                throw new Exception($"German IBANs must have {IBANLength} characters");
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             IBANDto ibanDto = new IBANDto();
 
             ibanDto.AssignCountryAndCode(ibanAsString);
 
-            var checksum = ibanAsString.Substring(2, 2);
-            var checkChar = ibanAsString.Substring(4, 1);
+            var checkDigits = ibanAsString.Substring(2, 2);
 
-            ibanDto.BankCode = ibanAsString.Substring(5, 5);
+            ibanDto.BranchCode = string.Empty;
+
+            ibanDto.BankCode = ibanAsString.Substring(4, 4);
 
             if (!ibanDto.BankCode.ContainsOnlyNumbers())
-                throw new Exception("Italian Bank codes may contain only numbers.");
+                throw new Exception("Bank Codes from Faroe Islands may contain only numbers.");
 
-            ibanDto.BranchCode = ibanAsString.Substring(10, 5);
+            ibanDto.AccountNumber = ibanAsString.Substring(8, 10);
 
-            if (!ibanDto.BranchCode.ContainsOnlyNumbers())
-                throw new Exception("Italian Branch codes may contain only numbers.");
+            if (!ibanDto.AccountNumber.ContainsOnlyNumbers())
+                throw new Exception("Account Numbers from Faroe Islands may contain only numbers.");
 
-            ibanDto.AccountNumber = ibanAsString.Substring(15, 12);
 
-            ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>
+            ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>()
             {
-                checksum, checkChar, ibanDto.BankCode, ibanDto.BranchCode, ibanDto.AccountNumber
+                "FO", checkDigits, ibanDto.BankCode, ibanDto.AccountNumber
             });
 
             return ibanDto;

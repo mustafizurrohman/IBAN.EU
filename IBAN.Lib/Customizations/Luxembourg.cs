@@ -4,16 +4,18 @@
 // Created          : 10-25-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 10-31-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="Luxembourg.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
 using System;
+using System.Collections.Generic;
 
 namespace IBANEU.Lib.Customizations
 {
@@ -31,6 +33,12 @@ namespace IBANEU.Lib.Customizations
         protected override int IBANLength => 20;
 
         /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <value>The country code.</value>
+        protected override string CountryCode => "LU";
+
+        /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
@@ -38,6 +46,8 @@ namespace IBANEU.Lib.Customizations
         /// <exception cref="Exception">Luxembourgish IBANs must have {IBANLength} characters</exception>
         /// <exception cref="Exception">Luxembourgisch Checksums may contain only numbers.</exception>
         /// <exception cref="Exception">Luxembourgisch Bankcode may contain only numbers.</exception>
+        /// <exception cref="Exception">Luxembourgish IBANs must have {IBANLength} characters</exception>
+        /// <exception cref="Exception">Luxembourgisch Checksums may contain only numbers.</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
@@ -64,10 +74,10 @@ namespace IBANEU.Lib.Customizations
 
             ibanDto.AccountNumber = ibanAsString.Substring(7, 13);
 
-
-            ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = ibanDto.CountryCode + Space + checksum + Space + ibanDto.BankCode
-                                         + Space + ibanDto.AccountNumber;
+            ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>
+            {
+                checksum, ibanDto.BankCode, ibanDto.AccountNumber
+            });
 
             return ibanDto;
         }

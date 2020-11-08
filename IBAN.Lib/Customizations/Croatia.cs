@@ -4,7 +4,7 @@
 // Created          : 11-01-2020
 //
 // Last Modified By : Mustafizur Rohman
-// Last Modified On : 11-01-2020
+// Last Modified On : 11-08-2020
 // ***********************************************************************
 // <copyright file="Croatia.cs" company="IBANEU.Lib">
 //     Copyright (c) Personal. All rights reserved.
@@ -15,6 +15,7 @@
 using IBANEU.Lib.Core;
 using IBANEU.Lib.ExtensionMethods;
 using System;
+using System.Collections.Generic;
 
 namespace IBANEU.Lib.Customizations
 {
@@ -32,11 +33,19 @@ namespace IBANEU.Lib.Customizations
         protected override int IBANLength => 21;
 
         /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <value>The country code.</value>
+        protected override string CountryCode => "HR";
+
+        /// <summary>
         /// Parses the iban from string.
         /// </summary>
         /// <param name="ibanAsString">The iban as string.</param>
         /// <returns>IBANEU.Lib.Core.IBANDto.</returns>
         /// <exception cref="Exception">Croatian IBANs must have {IBANLength} characters</exception>
+        /// <exception cref="Exception">Croatian Brank Codes may contain only numbers</exception>
+        /// <exception cref="Exception">Croatian Account Numbers may contain only numbers</exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
             ibanAsString = ibanAsString.RemoveSpaces();
@@ -62,10 +71,10 @@ namespace IBANEU.Lib.Customizations
             if (!ibanDto.AccountNumber.ContainsOnlyNumbers())
                 throw new Exception("Croatian Account Numbers may contain only numbers");
 
-            ibanDto.AsString = ibanAsString;
-            ibanDto.AsStringWithSpaces = "HR" + Space + checkSum + Space
-                                         + ibanDto.BankCode + Space + ibanDto.AccountNumber;
-
+            ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>
+            {
+                checkSum, ibanDto.BankCode, ibanDto.AccountNumber
+            });
 
             return ibanDto;
         }
