@@ -62,7 +62,12 @@ namespace IBANEU.Lib.Customizations
             ibanDto.BranchCode = ibanDto.BankCode;
 
             if (!ibanDto.BankCode.ContainsOnlyNumbers())
-                throw new Exception("Bank and Branc does from Austria may contain only numbers.");
+                throw new Exception("Bank and Branch Codes from Austria may contain only numbers.");
+
+            ibanDto.AccountNumber = ibanAsString.Substring(9, 11);
+
+            if (!ibanDto.AccountNumber.ContainsOnlyNumbers())
+                throw new Exception("AccountNumber from Austria may contain only numbers.");
 
             ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>
             {

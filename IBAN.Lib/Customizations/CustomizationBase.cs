@@ -63,9 +63,11 @@ namespace IBANEU.Lib.Customizations
         {
             // ReSharper disable once VirtualMemberCallInConstructor
             if (IBANLength > MaxLength)
-            {
                 throw new Exception($"Length of IBAN cannot be more than {MaxLength}");
-            }
+            
+            // ReSharper disable once VirtualMemberCallInConstructor
+            if (string.IsNullOrWhiteSpace(CountryCode))
+                throw new Exception("Country Code must be provided.");
         }
 
         /// <summary>

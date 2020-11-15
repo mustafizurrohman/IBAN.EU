@@ -77,7 +77,7 @@ namespace IBANEU.Lib.Customizations
 
             ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>()
             {
-                "FO", checkDigits, ibanDto.BankCode, ibanDto.AccountNumber
+                checkDigits, ibanDto.BankCode, ibanDto.AccountNumber
             });
 
             return ibanDto;
