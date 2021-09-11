@@ -75,9 +75,7 @@ namespace IBANEU.Lib.Helper
             if (ibanString.Length < 2)
                 throw new ArgumentException("No country code found.");
 
-
             return ibanString.Substring(0, Math.Min(2, ibanString.Length)).ToUpperInvariant();
-
         }
     }
 }
