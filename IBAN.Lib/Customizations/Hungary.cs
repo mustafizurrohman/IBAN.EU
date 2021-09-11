@@ -13,7 +13,10 @@
 // ***********************************************************************
 
 using IBANEU.Lib.Core;
+using IBANEU.Lib.ExtensionMethods;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IBANEU.Lib.Customizations
 {
@@ -45,7 +48,42 @@ namespace IBANEU.Lib.Customizations
         /// <exception cref="NotImplementedException"></exception>
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
-            throw new NotImplementedException();
+            ibanAsString = ibanAsString.RemoveSpaces();
+
+            if (ibanAsString.Length != IBANLength)
+                throw new Exception($"German IBANs must have {IBANLength} characters");
+
+            // ReSharper disable once UseObjectOrCollectionInitializer
+            IBANDto ibanDto = new IBANDto();
+
+            ibanDto.AssignCountryAndCode(ibanAsString);
+
+            ibanDto.BankCode = ibanAsString.Substring(4, 3);
+            
+            if (!ibanDto.BankCode.ContainsOnlyNumbers())
+                throw new Exception("Hungarian Bank Codes may contain only numbers.");
+
+            ibanDto.BranchCode = ibanAsString.Substring(7, 4);
+
+            if (!ibanDto.BranchCode.ContainsOnlyNumbers())
+                throw new Exception("Hungarian Branch Codes may contain only numbers.");
+
+            ibanDto.AccountNumber = ibanAsString.Substring(11, 16);
+
+            if (!ibanDto.AccountNumber.ContainsOnlyNumbers())
+                throw new Exception("Hungarian Account numbers may contain only numbers.");
+
+            var checkSum = ibanAsString.Substring(2, 2);
+            var checkDigit = ibanAsString.Last().ToString();
+
+            ibanDto.AsString = ibanAsString;
+
+            ibanDto.AsStringWithSpaces = FormatIBANString(new List<string>
+            {
+                checkSum, ibanDto.BankCode, ibanDto.BranchCode, ibanDto.AccountNumber, checkDigit
+            });
+
+            return ibanDto;
         }
     }
 }

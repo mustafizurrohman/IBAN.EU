@@ -93,6 +93,9 @@ namespace IBANEU.Lib.Helper
                 .GetType()
                 .Name;
 
+            if (customizerName == nameof(BosniaAndHerzegovina))
+                return "Bosnia and Herzegovina";
+
             var formattedName = Regex.Split(customizerName, @"(?<!^)(?=[A-Z])")
                 .Aggregate((a, b) => a + " " + b);
 
