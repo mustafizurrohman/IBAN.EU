@@ -25,12 +25,15 @@ namespace IBANEU.Lib.Helper
     /// </summary>
     internal static class CountryHelper
     {
-        private static readonly List<string> CustomizedCountriesList = typeof(IBAN)
+        public static readonly List<CustomizationBase> Customizers = typeof(IBAN)
             .Assembly
             .GetTypes()
             .Where(typ => typ.IsClass && !typ.IsAbstract && typ.IsSubclassOf(typeof(CustomizationBase)))
             .Select(Activator.CreateInstance)
             .Cast<CustomizationBase>()
+            .ToList();
+
+        private static readonly List<string> CustomizedCountriesList = Customizers
             .Select(x => x.CountryCode)
             .ToList();
 

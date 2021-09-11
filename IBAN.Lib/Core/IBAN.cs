@@ -16,7 +16,6 @@
 // ReSharper disable UnusedAutoPropertyAccessor.Local
 // ReSharper disable InconsistentNaming
 
-using IBANEU.Lib.Customizations;
 using IBANEU.Lib.ExtensionMethods;
 using IBANEU.Lib.Helper;
 using System;
@@ -183,14 +182,9 @@ namespace IBANEU.Lib.Core
         /// <returns>IBANDto.</returns>
         private IBANDto GetIBANDto(string ibanAsString)
         {
-            var customizer = typeof(IBAN)
-                .Assembly
-                .GetTypes()
-                .Where(typ => typ.IsClass && !typ.IsAbstract && typ.IsSubclassOf(typeof(CustomizationBase)))
-                .Select(Activator.CreateInstance)
-                .Cast<CustomizationBase>()
-                .First(typ => typ.CountryCode == this.CountryCode);
-
+            var customizer = CountryHelper.Customizers
+                .Single(typ => typ.CountryCode == this.CountryCode);
+            
             var parsed = customizer.ParseIbanFromString(ibanAsString);
             
             return parsed;
