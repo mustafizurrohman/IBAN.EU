@@ -80,5 +80,16 @@ namespace IBANEU.Lib.Customizations
             return CountryCode + Space + parts.Aggregate((a, b) => a + Space + b);
         }
 
+        internal string FormatIBANString(IBANDto ibanDto, string checksum)
+        {
+            var formattedString = CountryCode 
+                                  + Space + checksum
+                                  + Space + ibanDto.BranchCode
+                                  + Space + ibanDto.BankCode
+                                  + Space + ibanDto.AccountNumber;
+
+            return formattedString.ToUpperInvariant().Trim();
+        }
+
     }
 }
