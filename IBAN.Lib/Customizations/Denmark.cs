@@ -37,7 +37,7 @@ namespace IBANEU.Lib.Customizations
         /// Gets the country code.
         /// </summary>
         /// <value>The country code.</value>
-        protected override string CountryCode => "DK";
+        public override string CountryCode => "DK";
 
         /// <summary>
         /// Parses the iban from string.

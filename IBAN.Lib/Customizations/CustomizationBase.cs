@@ -34,7 +34,7 @@ namespace IBANEU.Lib.Customizations
         /// Gets the country code.
         /// </summary>
         /// <value>The country code.</value>
-        protected abstract string CountryCode { get; }
+        public abstract string CountryCode { get; }
 
         /// <summary>
         /// Parses the iban from string.

@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 
+using IBANEU.Lib.Core;
+using IBANEU.Lib.Customizations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,35 +25,15 @@ namespace IBANEU.Lib.Helper
     /// </summary>
     internal static class CountryHelper
     {
+        private static readonly List<string> CustomizedCountriesList = typeof(IBAN)
+            .Assembly
+            .GetTypes()
+            .Where(typ => typ.IsClass && !typ.IsAbstract && typ.IsSubclassOf(typeof(CustomizationBase)))
+            .Select(Activator.CreateInstance)
+            .Cast<CustomizationBase>()
+            .Select(x => x.CountryCode)
+            .ToList();
 
-        /// <summary>
-        /// The customized countries
-        /// </summary>
-        private static readonly Dictionary<string, string> CustomizedCountries = new Dictionary<string, string>()
-        {
-            { "DE", "Germany" },
-            { "CH", "Switzerland" },
-            { "FR", "France" },
-            { "IT", "Italy" },
-            { "ES", "Spain" },
-            { "LU", "Luxembourg" },
-            { "AX", "Aland Islands"},
-            { "AL", "Albania"},
-            { "AD", "Andorra" },
-            { "AT", "Austria" },
-            { "BY", "Belarus" },
-            { "BE", "Belgium" },
-            { "BA", "Bosnia and Herzegovina" },
-            { "BG", "Bulgaria" },
-            { "HR", "Croatia" },
-            { "CY", "Cyprus" },
-            { "CZ", "Czech Republic" },
-            { "DK", "Denmark" },
-            { "EE", "Estonia" },
-            { "FO", "Faroe Islands" },
-            { "FI", "Finland" },
-            { "GI", "Gibraltar" }
-        };
 
         /// <summary>
         /// Determines whether [is country customized] [the specified country code].
@@ -60,7 +42,7 @@ namespace IBANEU.Lib.Helper
         /// <returns><c>true</c> if [is country customized] [the specified country code]; otherwise, <c>false</c>.</returns>
         public static bool IsCountryCustomized(string countryCode)
         {
-            return CustomizedCountries.Keys.Contains(countryCode);
+            return CustomizedCountriesList.Contains(countryCode);
         }
 
         /// <summary>
@@ -76,7 +58,7 @@ namespace IBANEU.Lib.Helper
             if (!IsCountryCustomized(countryCode))
                 throw new Exception("Country not yet customized");
 
-            return CustomizedCountries[countryCode];
+            return CustomizedCountriesList.Single(c => c == countryCode);
         }
 
         /// <summary>

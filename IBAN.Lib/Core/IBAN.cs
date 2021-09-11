@@ -20,6 +20,7 @@ using IBANEU.Lib.Customizations;
 using IBANEU.Lib.ExtensionMethods;
 using IBANEU.Lib.Helper;
 using System;
+using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
 
@@ -182,33 +183,16 @@ namespace IBANEU.Lib.Core
         /// <returns>IBANDto.</returns>
         private IBANDto GetIBANDto(string ibanAsString)
         {
-            var parsed = this.CountryCode switch
-            {
-                "DE" => new Germany().ParseIbanFromString(ibanAsString),
-                "CH" => new Switzerland().ParseIbanFromString(ibanAsString),
-                "FR" => new France().ParseIbanFromString(ibanAsString),
-                "IT" => new Italy().ParseIbanFromString(ibanAsString),
-                "ES" => new Spain().ParseIbanFromString(ibanAsString),
-                "LU" => new Luxembourg().ParseIbanFromString(ibanAsString),
-                "AX" => new AlandIslands().ParseIbanFromString(ibanAsString),
-                "AL" => new Albania().ParseIbanFromString(ibanAsString),
-                "AD" => new Andorra().ParseIbanFromString(ibanAsString),
-                "AT" => new Austria().ParseIbanFromString(ibanAsString),
-                "BY" => new Belarus().ParseIbanFromString(ibanAsString),
-                "BE" => new Belgium().ParseIbanFromString(ibanAsString),
-                "BA" => new BosniaAndHerzegovina().ParseIbanFromString(ibanAsString),
-                "BG" => new Bulgaria().ParseIbanFromString(ibanAsString),
-                "HR" => new Croatia().ParseIbanFromString(ibanAsString),
-                "CY" => new Cyprus().ParseIbanFromString(ibanAsString),
-                "CZ" => new CzechRepublic().ParseIbanFromString(ibanAsString),
-                "DK" => new Denmark().ParseIbanFromString(ibanAsString),
-                "EE" => new Estonia().ParseIbanFromString(ibanAsString),
-                "FO" => new FaroeIslands().ParseIbanFromString(ibanAsString),
-                "FI" => new Finland().ParseIbanFromString(ibanAsString),
-                "GI" => new Gibraltar().ParseIbanFromString(ibanAsString),
-                _ => throw new Exception("Country not supported yet.")
-            };
+            var customizer = typeof(IBAN)
+                .Assembly
+                .GetTypes()
+                .Where(typ => typ.IsClass && !typ.IsAbstract && typ.IsSubclassOf(typeof(CustomizationBase)))
+                .Select(Activator.CreateInstance)
+                .Cast<CustomizationBase>()
+                .First(typ => typ.CountryCode == this.CountryCode);
 
+            var parsed = customizer.ParseIbanFromString(ibanAsString);
+            
             return parsed;
         }
 

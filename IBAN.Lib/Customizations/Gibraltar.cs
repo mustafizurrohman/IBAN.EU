@@ -8,7 +8,7 @@ namespace IBANEU.Lib.Customizations
     internal class Gibraltar : CustomizationBase
     {
         protected override int IBANLength => 23;
-        protected override string CountryCode => "GI";
+        public override string CountryCode => "GI";
 
         internal override IBANDto ParseIbanFromString(string ibanAsString)
         {
