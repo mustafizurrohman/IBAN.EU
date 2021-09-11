@@ -17,6 +17,7 @@ using IBANEU.Lib.Customizations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace IBANEU.Lib.Helper
 {
@@ -61,7 +62,9 @@ namespace IBANEU.Lib.Helper
             if (!IsCountryCustomized(countryCode))
                 throw new Exception("Country not yet customized");
 
-            return CustomizedCountriesList.Single(c => c == countryCode);
+            var customizerName = GetCountryFromCode(countryCode);
+
+            return customizerName;
         }
 
         /// <summary>
@@ -76,6 +79,25 @@ namespace IBANEU.Lib.Helper
                 throw new ArgumentException("No country code found.");
 
             return ibanString.Substring(0, Math.Min(2, ibanString.Length)).ToUpperInvariant();
+        }
+
+        /// <summary>
+        /// Gets the country from code.
+        /// </summary>
+        /// <param name="countryCode">The country code.</param>
+        /// <returns>System.String.</returns>
+        private static string GetCountryFromCode(string countryCode)
+        {
+            var customizerName = Customizers
+                .Single(x => x.CountryCode == countryCode)
+                .GetType()
+                .Name;
+
+            var formattedName = Regex.Split(customizerName, @"(?<!^)(?=[A-Z])")
+                .Aggregate((a, b) => a + " " + b);
+
+            return formattedName;
+
         }
     }
 }

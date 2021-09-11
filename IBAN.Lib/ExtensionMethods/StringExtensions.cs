@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace IBANEU.Lib.ExtensionMethods
 {
@@ -62,5 +63,14 @@ namespace IBANEU.Lib.ExtensionMethods
             return inputString.Replace(" ", string.Empty);
         }
 
+        /// <summary>
+        /// Removes the consequtive spaces.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <returns>System.String.</returns>
+        public static string RemoveConsequtiveSpaces(this string input)
+        {
+            return Regex.Replace(input.Trim(), @"\s+", " ");
+        }
     }
 }

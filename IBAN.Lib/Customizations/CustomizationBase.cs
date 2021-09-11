@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using IBANEU.Lib.Core;
+using IBANEU.Lib.ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,7 +89,7 @@ namespace IBANEU.Lib.Customizations
                                   + Space + ibanDto.BankCode
                                   + Space + ibanDto.AccountNumber;
 
-            return formattedString.ToUpperInvariant().Trim();
+            return formattedString.ToUpperInvariant().Trim().RemoveConsequtiveSpaces();
         }
 
     }
