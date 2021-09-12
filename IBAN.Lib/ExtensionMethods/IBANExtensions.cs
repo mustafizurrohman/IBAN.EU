@@ -67,7 +67,9 @@ namespace IBANEU.Lib.ExtensionMethods
 
             Console.WriteLine("Country          : " + iban.Country);
             Console.WriteLine("CountryCode      : " + iban.CountryCode);
-            Console.WriteLine("BankCode         : " + iban.BankCode);
+            
+            if (!string.IsNullOrWhiteSpace(iban.BankCode))
+                Console.WriteLine("BankCode         : " + iban.BankCode);
 
             if (!string.IsNullOrWhiteSpace(iban.BranchCode))
                 Console.WriteLine("BranchCode       : " + iban.BranchCode);
