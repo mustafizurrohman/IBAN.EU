@@ -182,6 +182,7 @@ namespace IBANEU.Lib.Core
         /// <returns>IBANDto.</returns>
         private IBANDto GetIBANDto(string ibanAsString)
         {
+            // Reflection magic!
             var customizer = CountryHelper.Customizers
                 .Single(typ => typ.CountryCode == this.CountryCode);
             
